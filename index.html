@@ -305,6 +305,7 @@ var CURRENT_USER=null;
 var SESSION_START=Date.now();
 var ROOM_KEY=null;
 var ROOM_POLL=null;
+var IS_HOST=false;
 
 function sbInit(){
   try{
@@ -320,8 +321,17 @@ async function authLogin(name){
   name=name.toUpperCase().trim().replace(/[^A-Z0-9_]/g,'').slice(0,14);
   if(name.length<2)return{err:'NAME TOO SHORT'};
   // Toujours accepter - essayer Supabase en arriere-plan
+  // Check if name is locked by another session (tab/device protection)
+  try{
+    var lock=localStorage.getItem('vf_lock_'+name);
+    if(lock&&Date.now()-parseInt(lock)<30000){// 30s session lock
+      return{err:'NAME ALREADY IN USE -- TRY ANOTHER OR WAIT 30s'};
+    }
+    localStorage.setItem('vf_lock_'+name,Date.now());
+    // Refresh lock every 20s while playing
+    setInterval(function(){if(CURRENT_USER&&CURRENT_USER.username===name)localStorage.setItem('vf_lock_'+name,Date.now());},20000);
+  }catch(e){}
   CURRENT_USER={username:name,best_score:0,play_time:0,kills:0,credits:0};
-  // Charger depuis localStorage d'abord
   try{
     var local=JSON.parse(localStorage.getItem('vf_profile_'+name)||'null');
     if(local)CURRENT_USER=local;
@@ -391,7 +401,7 @@ async function createRoom(){
   try{
     var host=CURRENT_USER?CURRENT_USER.username:'PILOT';
     await SB.from('private_rooms').insert({room_key:key,host:host,players:JSON.stringify([{name:host,score:0,lvl:1}])});
-    ROOM_KEY=key;startRoomPoll(key);return key;
+    ROOM_KEY=key;IS_HOST=true;startRoomPoll(key);return key;
   }catch(e){ROOM_KEY=key;return key;}
 }
 
@@ -407,7 +417,7 @@ async function joinRoom(key){
       players.push({name:nm,score:0,lvl:1});
       await SB.from('private_rooms').update({players:JSON.stringify(players)}).eq('room_key',key);
     }
-    ROOM_KEY=key;startRoomPoll(key);return{ok:true,players:players};
+    ROOM_KEY=key;IS_HOST=false;startRoomPoll(key);return{ok:true,players:players};
   }catch(e){return{err:'CONNECTION ERROR'};}
 }
 
@@ -431,6 +441,12 @@ function startRoomPoll(key){
       var r=await SB.from('private_rooms').select('players').eq('room_key',key).single();
       if(!r.data)return;
       var players=typeof r.data.players==='string'?JSON.parse(r.data.players):r.data.players||[];
+      // Detect host start signal
+      if(!IS_HOST&&players.length===1&&players[0].name==='__START__'){
+        stopRoomPoll();
+        document.getElementById('mp-screen').style.display='none';
+        start();showMsgIn('HOST STARTED THE GAME!',2000);return;
+      }
       renderRoomPlayers(players);
     }catch(e){}
   },3000);
@@ -1163,7 +1179,10 @@ var JOY={dx:0,dy:0,id:-1,cx:0,cy:0};
 var CLK=new THREE.Clock(),vX=0,vY=0,eT=0,FT=0;
 
 function animate(){
-  requestAnimationFrame(animate);
+  window.addEventListener('beforeunload',function(){
+  if(CURRENT_USER)try{localStorage.removeItem('vf_lock_'+CURRENT_USER.username);}catch(e){}
+});
+requestAnimationFrame(animate);
   var dt=CLK.getDelta();FT++;
   if(!G.run||G.paused){R.render(S,CAM);return;}
 
@@ -1577,11 +1596,12 @@ document.getElementById('create-room-btn').addEventListener('click',async functi
   d.style.display='block';
   d.textContent='ROOM KEY: '+key+'  (share this with friends)';
   document.getElementById('join-key-input').value=key;
+  IS_HOST=true;
   document.getElementById('room-status').style.display='block';
-  document.getElementById('room-status-txt').textContent='YOU ARE HOST -- WAITING FOR PLAYERS...';
+  document.getElementById('room-status-txt').textContent='YOU ARE HOST -- SHARE THE KEY ABOVE';
   document.getElementById('leave-room-btn').style.display='inline-flex';
-  // Host can start immediately
-  document.getElementById('start-game-btn').style.display='block';
+  document.getElementById('start-game-btn').style.display='inline-flex';
+  document.getElementById('start-game-btn').style.opacity='1';
 });
 
 document.getElementById('join-room-btn').addEventListener('click',async function(){
@@ -1592,17 +1612,22 @@ document.getElementById('join-room-btn').addEventListener('click',async function
   if(res.players)renderRoomPlayers(res.players);
   document.getElementById('room-key-display').style.display='block';
   document.getElementById('room-key-display').textContent='JOINED ROOM: '+key;
+  IS_HOST=false;
   document.getElementById('room-status').style.display='block';
   document.getElementById('room-status-txt').textContent='JOINED! WAITING FOR HOST TO START...';
   document.getElementById('leave-room-btn').style.display='inline-flex';
-  document.getElementById('start-game-btn').style.display='block';
+  document.getElementById('start-game-btn').style.display='none';// guests cannot start
 });
 
-document.getElementById('start-game-btn').addEventListener('click',function(){
+document.getElementById('start-game-btn').addEventListener('click',async function(){
   if(!ROOM_KEY){showMsgIn('NO ROOM ACTIVE',1500);return;}
+  if(!IS_HOST){showMsgIn('ONLY HOST CAN START',1800);return;}
+  // Signal all players to start via Supabase room status
+  if(SB){
+    try{await SB.from('private_rooms').update({players:JSON.stringify([{name:'__START__',score:0,lvl:1}])}).eq('room_key',ROOM_KEY);}catch(e){}
+  }
   document.getElementById('mp-screen').style.display='none';
   stopRoomPoll();
-  // Start game with room active - scores will sync
   start();
   showMsgIn('ROOM: '+ROOM_KEY,2500);
 });
