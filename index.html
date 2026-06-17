@@ -237,7 +237,8 @@ body{background:#000;overflow:hidden;font-family:'Courier New',monospace;touch-a
   <p id="go-sub">COQUE BREACHEE</p>
   <div class="p" id="gst" style="margin-bottom:20px;padding:14px 28px;line-height:2.6;font-size:10px"></div>
   <button class="btn btn-gold" id="rb-ad" style="margin-bottom:6px">SECONDE VIE (voir pub)</button>
-  <button class="btn btn-red" id="rb">RECOMMENCER</button>
+  <button class="btn btn-red" id="rb">RESTART</button>
+  <button class="btn" id="home-btn">HOME</button>
   <button class="btn btn-gold" id="lb-btn">LEADERBOARD</button>
   <button class="btn" onclick="openStore()">HANGAR</button>
   <div id="ad-gameover" style="position:static;display:block;transform:none;border:none;background:none;padding:0;margin-top:16px">
@@ -278,7 +279,7 @@ body{background:#000;overflow:hidden;font-family:'Courier New',monospace;touch-a
   <h2>HANGAR SPATIAL</h2>
   <p id="store-sub">CREDITS DISPONIBLES: <span id="store-cr" style="color:#ffdd00;font-size:12px">0</span></p>
   <div id="ships-grid"></div>
-  <button class="btn btn-gold" onclick="closeStore()">FERMER LE HANGAR</button>
+  <button class="btn btn-gold" onclick="closeStore()">CLOSE HANGAR</button>
 </div>
 
 <!-- MOBILE CONTROLS -->
@@ -306,6 +307,9 @@ var SESSION_START=Date.now();
 var ROOM_KEY=null;
 var ROOM_POLL=null;
 var IS_HOST=false;
+var RT_CHANNEL=null;  // Supabase Realtime channel
+var OTHER_PLAYERS={};  // {username: {mesh, x, y, z, hp, score}}
+var DEVICE_ID=(function(){try{var d=localStorage.getItem('vf_device_id');if(!d){d='dev_'+Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('vf_device_id',d);}return d;}catch(e){return 'dev_'+Math.random().toString(36).slice(2);}})();
 
 function sbInit(){
   try{
@@ -322,14 +326,15 @@ async function authLogin(name){
   if(name.length<2)return{err:'NAME TOO SHORT'};
   // Toujours accepter - essayer Supabase en arriere-plan
   // Check if name is locked by another session (tab/device protection)
+  // Device-based lock: each device gets one name slot
   try{
-    var lock=localStorage.getItem('vf_lock_'+name);
-    if(lock&&Date.now()-parseInt(lock)<30000){// 30s session lock
-      return{err:'NAME ALREADY IN USE -- TRY ANOTHER OR WAIT 30s'};
+    var myDev=DEVICE_ID;
+    var prevName=localStorage.getItem('vf_device_name');
+    // If this device already claimed a different name, block
+    if(prevName&&prevName!==name){
+      return{err:'THIS DEVICE ALREADY HAS NAME: '+prevName+' (clear site data to reset)'};
     }
-    localStorage.setItem('vf_lock_'+name,Date.now());
-    // Refresh lock every 20s while playing
-    setInterval(function(){if(CURRENT_USER&&CURRENT_USER.username===name)localStorage.setItem('vf_lock_'+name,Date.now());},20000);
+    localStorage.setItem('vf_device_name',name);
   }catch(e){}
   CURRENT_USER={username:name,best_score:0,play_time:0,kills:0,credits:0};
   try{
@@ -349,7 +354,7 @@ async function authLogin(name){
           updateProfileHUD();updHUD();
         } else {
           // Creer le profil
-          var ins=await SB.from('profiles').insert({username:name,best_score:0,play_time:0,kills:0,level:1,credits:0}).select().single();
+          var ins=await SB.from('profiles').insert({username:name,best_score:0,play_time:0,kills:0,level:1,credits:0,device_id:DEVICE_ID}).select().single();
           if(ins.data){
             CURRENT_USER=ins.data;
             try{localStorage.setItem('vf_profile_'+name,JSON.stringify(CURRENT_USER));}catch(e){}
@@ -454,6 +459,60 @@ function startRoomPoll(key){
 
 function stopRoomPoll(){if(ROOM_POLL){clearInterval(ROOM_POLL);ROOM_POLL=null;}}
 
+//  REALTIME MULTIPLAYER 
+function startRealtime(roomKey){
+  if(!SB)return;
+  if(RT_CHANNEL){SB.removeChannel(RT_CHANNEL);RT_CHANNEL=null;}
+  // Remove old other-player meshes
+  Object.keys(OTHER_PLAYERS).forEach(function(u){if(OTHER_PLAYERS[u].mesh)S.remove(OTHER_PLAYERS[u].mesh);});
+  OTHER_PLAYERS={};
+
+  RT_CHANNEL=SB.channel('room:'+roomKey,{config:{broadcast:{self:false}}});
+  RT_CHANNEL
+    .on('broadcast',{event:'pos'},function(payload){
+      var d=payload.payload;
+      if(!d||!d.u||d.u===( CURRENT_USER?CURRENT_USER.username:''))return;
+      if(!OTHER_PLAYERS[d.u]){
+        // Create ghost ship for other player
+        var ghost=new THREE.Group();
+        var mat=new THREE.MeshBasicMaterial({color:0xff6600,wireframe:true});
+        ghost.add(new THREE.Mesh(new THREE.ConeGeometry(.55,2.6,8),mat));
+        var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:TX.gr,transparent:true,blending:THREE.AdditiveBlending}));
+        sp.scale.set(1.5,1.5,1);ghost.add(sp);
+        S.add(ghost);
+        OTHER_PLAYERS[d.u]={mesh:ghost,score:0,hp:100};
+      }
+      var op=OTHER_PLAYERS[d.u];
+      op.mesh.position.set(d.x,d.y,d.z);
+      op.mesh.rotation.z=d.rz||0;
+      op.score=d.sc||0;op.hp=d.hp||100;
+    })
+    .on('broadcast',{event:'start'},function(){
+      if(!IS_HOST&&G.run===false){
+        document.getElementById('mp-screen').style.display='none';
+        start();showMsgIn('HOST STARTED!',2000);
+      }
+    })
+    .subscribe();
+}
+
+function stopRealtime(){
+  if(RT_CHANNEL&&SB){SB.removeChannel(RT_CHANNEL);RT_CHANNEL=null;}
+  Object.keys(OTHER_PLAYERS).forEach(function(u){if(OTHER_PLAYERS[u].mesh)S.remove(OTHER_PLAYERS[u].mesh);});
+  OTHER_PLAYERS={};
+}
+
+var RT_TICK=0;
+function broadcastPos(){
+  if(!RT_CHANNEL||!CURRENT_USER||!G.run)return;
+  RT_TICK++;if(RT_TICK%3!==0)return;// every 3 frames ~50ms at 60fps
+  RT_CHANNEL.send({type:'broadcast',event:'pos',payload:{
+    u:CURRENT_USER.username,
+    x:PL.position.x,y:PL.position.y,z:PL.position.z,
+    rz:PL.rotation.z,sc:G.score,hp:G.hp
+  }});
+}
+
 function renderRoomPlayers(players){
   var el=document.getElementById('mp-players');if(!el)return;el.innerHTML='';
   players.forEach(function(p,i){
@@ -467,7 +526,12 @@ function updateProfileHUD(){
   var el=document.getElementById('profile-hud');if(!el||!CURRENT_USER)return;
   var pt=Math.floor((Date.now()-SESSION_START)/1000)+(CURRENT_USER.play_time||0);
   var h=Math.floor(pt/3600),m=Math.floor((pt%3600)/60),s=pt%60;
-  el.innerHTML='PILOT: '+CURRENT_USER.username+'<br>BEST: '+(Math.max(G.best,CURRENT_USER.best_score||0)).toLocaleString()+'<br>TIME: '+(h?h+'h ':'')+m+'m '+s+'s';
+  var others='';
+  Object.keys(OTHER_PLAYERS).forEach(function(u){
+    var op=OTHER_PLAYERS[u];
+    others+='<br><span style="color:#ff8800">'+u+': '+op.score+'</span>';
+  });
+  el.innerHTML='PILOT: '+CURRENT_USER.username+'<br>BEST: '+(Math.max(G.best,CURRENT_USER.best_score||0)).toLocaleString()+'<br>TIME: '+(h?h+'h ':'')+m+'m '+s+'s'+others;
 }
 
 // =========================================================
@@ -1155,6 +1219,11 @@ function revive(){
 }
 document.getElementById('sb2').addEventListener('click',start);
 document.getElementById('rb').addEventListener('click',start);
+document.getElementById('home-btn').addEventListener('click',function(){
+  G.run=false;
+  document.getElementById('gs').style.display='none';
+  document.getElementById('ss').style.display='flex';
+});
 
 // =========================================================
 // MOBILE
@@ -1508,6 +1577,7 @@ requestAnimationFrame(animate);
   updHUD();
   // Slowly shift fog density based on level for atmosphere
   S.fog.density=Math.max(.0006,.0014-.00005*Math.min(G.lvl,15));
+  broadcastPos();
   if(FT%60===0){updateProfileHUD();if(ROOM_KEY&&FT%300===0)updateRoom();}
   // Shift fog color per boss tier for atmosphere
   if(G.bossOn&&G.boss){
@@ -1566,6 +1636,9 @@ document.getElementById('mp-open-btn').addEventListener('click',async function()
     document.getElementById('room-key-display').textContent='ROOM KEY: '+ROOM_KEY;
     document.getElementById('room-status').style.display='block';
     document.getElementById('leave-room-btn').style.display='inline-flex';
+    document.getElementById('start-game-btn').style.display=IS_HOST?'inline-flex':'none';
+    document.getElementById('start-game-btn').disabled=!IS_HOST;
+    document.getElementById('room-status-txt').textContent=IS_HOST?'YOU ARE HOST -- SHARE THE KEY WITH YOUR FRIEND':'WAITING FOR HOST TO START...';
     startRoomPoll(ROOM_KEY);
   }
 });
@@ -1582,10 +1655,11 @@ document.getElementById('mp-solo-btn').addEventListener('click',function(){
 });
 
 document.getElementById('leave-room-btn').addEventListener('click',function(){
-  ROOM_KEY=null;stopRoomPoll();
+  ROOM_KEY=null;IS_HOST=false;stopRoomPoll();stopRealtime();
   document.getElementById('room-status').style.display='none';
   document.getElementById('room-key-display').style.display='none';
   document.getElementById('leave-room-btn').style.display='none';
+  document.getElementById('start-game-btn').style.display='none';
   document.getElementById('mp-players').innerHTML='';
   document.getElementById('join-key-input').value='';
 });
@@ -1597,11 +1671,12 @@ document.getElementById('create-room-btn').addEventListener('click',async functi
   d.textContent='ROOM KEY: '+key+'  (share this with friends)';
   document.getElementById('join-key-input').value=key;
   IS_HOST=true;
+  startRealtime(key);
   document.getElementById('room-status').style.display='block';
-  document.getElementById('room-status-txt').textContent='YOU ARE HOST -- SHARE THE KEY ABOVE';
+  document.getElementById('room-status-txt').textContent='YOU ARE HOST -- SHARE THE KEY WITH YOUR FRIEND';
   document.getElementById('leave-room-btn').style.display='inline-flex';
   document.getElementById('start-game-btn').style.display='inline-flex';
-  document.getElementById('start-game-btn').style.opacity='1';
+  document.getElementById('start-game-btn').disabled=false;
 });
 
 document.getElementById('join-room-btn').addEventListener('click',async function(){
@@ -1613,30 +1688,35 @@ document.getElementById('join-room-btn').addEventListener('click',async function
   document.getElementById('room-key-display').style.display='block';
   document.getElementById('room-key-display').textContent='JOINED ROOM: '+key;
   IS_HOST=false;
+  startRealtime(key);
   document.getElementById('room-status').style.display='block';
   document.getElementById('room-status-txt').textContent='JOINED! WAITING FOR HOST TO START...';
   document.getElementById('leave-room-btn').style.display='inline-flex';
-  document.getElementById('start-game-btn').style.display='none';// guests cannot start
+  document.getElementById('start-game-btn').style.display='none';
+  document.getElementById('start-game-btn').disabled=true;
 });
 
 document.getElementById('start-game-btn').addEventListener('click',async function(){
   if(!ROOM_KEY){showMsgIn('NO ROOM ACTIVE',1500);return;}
-  if(!IS_HOST){showMsgIn('ONLY HOST CAN START',1800);return;}
+  if(!IS_HOST){document.getElementById('start-game-btn').style.display='none';return;}
   // Signal all players to start via Supabase room status
-  if(SB){
-    try{await SB.from('private_rooms').update({players:JSON.stringify([{name:'__START__',score:0,lvl:1}])}).eq('room_key',ROOM_KEY);}catch(e){}
+  // Broadcast start to all guests via Realtime
+  if(RT_CHANNEL){
+    RT_CHANNEL.send({type:'broadcast',event:'start',payload:{host:CURRENT_USER?CURRENT_USER.username:'HOST'}});
   }
+  // Also write to DB as fallback for polling
+  if(SB){try{await SB.from('private_rooms').update({players:JSON.stringify([{name:'__START__',score:0,lvl:1}])}).eq('room_key',ROOM_KEY);}catch(e){}}
   document.getElementById('mp-screen').style.display='none';
   stopRoomPoll();
   start();
-  showMsgIn('ROOM: '+ROOM_KEY,2500);
+  showMsgIn('GAME STARTED!',2000);
 });
 
 //  One-time English UI setup 
 document.getElementById('sb2').textContent=T('start');
 document.getElementById('go-title').textContent=T('go');
 document.getElementById('go-sub').textContent=T('gosub');
-document.getElementById('rb').textContent=T('restart');
+document.getElementById('rb').textContent='RESTART';
 document.getElementById('rb-ad').textContent=T('secondLife');
 document.getElementById('pause-title').textContent=T('pause');
 document.getElementById('resume-btn').textContent=T('resume');
