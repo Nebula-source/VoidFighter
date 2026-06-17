@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 <title>VOID FIGHTER -- Jeu Spatial 3D Gratuit | Free Space Shooter Game | Juego Espacial</title>
 <meta name="description" content="VOID FIGHTER: jeu de combat spatial 3D gratuit dans le navigateur. Free browser space shooter game. Juego espacial gratis. . Raumkampf-Spiel kostenlos.">
-<meta name="keywords" content="void fighter, VoidFighter, VOIDFIGHTER, VOID FIGHTER, voidfither, void fighter 3D, void fighter 3d, voidfighter, space game, jeu spatial gratuit, free space shooter, juego espacial,, WebGL game, browser game, 3D space game">
+<meta name="keywords" content="void fighter, VoidFighter, VOIDFIGHTER, VOID FIGHTER, voidfither, void fighter 3D, void fighter 3d, voidfighter, space game, jeu spatial gratuit, free space shooter, juego espacial, WebGL game, browser game, 3D space game">
 <meta name="author" content="Void Fighter Studio">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="VOID FIGHTER -- Free 3D Space Shooter">
@@ -205,9 +205,14 @@ body{background:#000;overflow:hidden;font-family:'Courier New',monospace;touch-a
     <h3>GLOBAL LEADERBOARD PREVIEW</h3>
     <div id="mp-lb-preview"></div>
   </div>
+  <div id="room-status" style="display:none;text-align:center;margin-bottom:14px">
+    <div style="color:rgba(0,255,180,.5);font-size:9px;letter-spacing:2px;margin-bottom:8px" id="room-status-txt">WAITING FOR PLAYERS...</div>
+    <button class="btn btn-gold" id="start-game-btn" style="font-size:13px;padding:14px 44px;letter-spacing:4px">START GAME</button>
+  </div>
   <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
     <button class="btn" id="mp-solo-btn">SOLO MODE</button>
     <button class="btn" id="mp-close-btn">BACK</button>
+    <button class="btn btn-red" id="leave-room-btn" style="display:none">LEAVE ROOM</button>
   </div>
 </div>
 
@@ -1528,7 +1533,6 @@ try{var ln=localStorage.getItem('vf_last_name');if(ln)document.getElementById('a
 //  MULTIPLAYER SCREEN LOGIC 
 document.getElementById('mp-open-btn').addEventListener('click',async function(){
   document.getElementById('mp-screen').style.display='flex';
-  // Load leaderboard preview
   var arr=await sbLeaderboard();
   var el=document.getElementById('mp-lb-preview');el.innerHTML='';
   arr.slice(0,5).forEach(function(e,i){
@@ -1537,31 +1541,70 @@ document.getElementById('mp-open-btn').addEventListener('click',async function()
     d.textContent=(i+1)+'. '+e.username+'  --  '+e.score.toLocaleString()+'  (LVL '+e.level+')';
     el.appendChild(d);
   });
+  // If already in a room, show it
+  if(ROOM_KEY){
+    document.getElementById('room-key-display').style.display='block';
+    document.getElementById('room-key-display').textContent='ROOM KEY: '+ROOM_KEY;
+    document.getElementById('room-status').style.display='block';
+    document.getElementById('leave-room-btn').style.display='inline-flex';
+    startRoomPoll(ROOM_KEY);
+  }
 });
+
 document.getElementById('mp-close-btn').addEventListener('click',function(){
   document.getElementById('mp-screen').style.display='none';
   stopRoomPoll();
 });
+
 document.getElementById('mp-solo-btn').addEventListener('click',function(){
   document.getElementById('mp-screen').style.display='none';
   stopRoomPoll();
   document.getElementById('sb2').click();
 });
+
+document.getElementById('leave-room-btn').addEventListener('click',function(){
+  ROOM_KEY=null;stopRoomPoll();
+  document.getElementById('room-status').style.display='none';
+  document.getElementById('room-key-display').style.display='none';
+  document.getElementById('leave-room-btn').style.display='none';
+  document.getElementById('mp-players').innerHTML='';
+  document.getElementById('join-key-input').value='';
+});
+
 document.getElementById('create-room-btn').addEventListener('click',async function(){
   var key=await createRoom();
   var d=document.getElementById('room-key-display');
   d.style.display='block';
-  d.textContent='ROOM KEY: '+key;
+  d.textContent='ROOM KEY: '+key+'  (share this with friends)';
   document.getElementById('join-key-input').value=key;
+  document.getElementById('room-status').style.display='block';
+  document.getElementById('room-status-txt').textContent='YOU ARE HOST -- WAITING FOR PLAYERS...';
+  document.getElementById('leave-room-btn').style.display='inline-flex';
+  // Host can start immediately
+  document.getElementById('start-game-btn').style.display='block';
 });
+
 document.getElementById('join-room-btn').addEventListener('click',async function(){
-  var key=document.getElementById('join-key-input').value;
-  if(!key.trim())return;
+  var key=document.getElementById('join-key-input').value.trim();
+  if(!key){showMsgIn('ENTER A ROOM KEY',1500);return;}
   var res=await joinRoom(key);
   if(res.err){showMsgIn(res.err,2000);return;}
   if(res.players)renderRoomPlayers(res.players);
   document.getElementById('room-key-display').style.display='block';
-  document.getElementById('room-key-display').textContent='JOINED: '+key;
+  document.getElementById('room-key-display').textContent='JOINED ROOM: '+key;
+  document.getElementById('room-status').style.display='block';
+  document.getElementById('room-status-txt').textContent='JOINED! WAITING FOR HOST TO START...';
+  document.getElementById('leave-room-btn').style.display='inline-flex';
+  document.getElementById('start-game-btn').style.display='block';
+});
+
+document.getElementById('start-game-btn').addEventListener('click',function(){
+  if(!ROOM_KEY){showMsgIn('NO ROOM ACTIVE',1500);return;}
+  document.getElementById('mp-screen').style.display='none';
+  stopRoomPoll();
+  // Start game with room active - scores will sync
+  start();
+  showMsgIn('ROOM: '+ROOM_KEY,2500);
 });
 
 //  One-time English UI setup 
