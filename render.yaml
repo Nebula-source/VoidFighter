@@ -1,0 +1,5 @@
+services:
+  - type: web
+    name: voidfighter-backend
+    runtime: docker
+    plan: free
