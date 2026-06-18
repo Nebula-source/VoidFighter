@@ -43,6 +43,13 @@ body{background:#000;overflow:hidden;font-family:'Courier New',monospace;touch-a
 #kf{position:absolute;top:68px;left:14px;font-size:8px;color:#ff8800;letter-spacing:1px;text-shadow:0 0 4px #ff8800}
 #pickups{position:absolute;top:50%;right:16px;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px;pointer-events:none}
 #msg{position:absolute;top:32%;left:50%;transform:translate(-50%,-50%);font-size:22px;font-weight:bold;letter-spacing:5px;color:#00ffb4;text-shadow:0 0 18px #00ffb4,0 0 40px #00ffb4;display:none;animation:pop .4s ease;text-align:center}
+#loading-mp{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:300;display:none;flex-direction:column;align-items:center;justify-content:center;gap:20px}
+#loading-mp h2{color:#00ffb4;letter-spacing:6px;font-size:22px;text-shadow:0 0 20px #00ffb4}
+.load-bar{width:260px;height:4px;background:rgba(0,255,180,.1);border-radius:2px;overflow:hidden}
+.load-fill{height:100%;background:var(--cyan,#00ffb4);border-radius:2px;animation:loadpulse 1.2s ease-in-out infinite}
+@keyframes loadpulse{0%{width:0%}50%{width:80%}100%{width:100%}}
+#loading-mp p{color:rgba(0,255,180,.4);font-size:10px;letter-spacing:3px}
+#load-players{color:#ffdd00;font-size:11px;letter-spacing:2px}
 @keyframes pop{from{transform:translate(-50%,-50%) scale(.6);opacity:0}to{transform:translate(-50%,-50%) scale(1);opacity:1}}
 #combo{position:absolute;top:42%;left:50%;transform:translate(-50%,-50%);font-size:18px;font-weight:bold;color:#ffdd00;text-shadow:0 0 14px #ffdd00;display:none;letter-spacing:4px;animation:pop .3s ease}
 #credits-hud{position:absolute;top:10px;right:18px;color:#ffdd00;font-size:9px;letter-spacing:2px;text-shadow:0 0 8px #ffdd00}
@@ -143,6 +150,12 @@ body{background:#000;overflow:hidden;font-family:'Courier New',monospace;touch-a
 <body>
 <canvas id="c"></canvas>
 <div id="profile-hud"></div>
+<div id="ad-left" style="position:fixed;top:50%;left:0;transform:translateY(-50%);width:160px;z-index:5;display:none">
+  <ins class="adsbygoogle" style="display:block;width:160px;height:600px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="AD_SLOT_LEFT_160x600" data-ad-format="fixed"></ins>
+</div>
+<div id="ad-right" style="position:fixed;top:50%;right:0;transform:translateY(-50%);width:160px;z-index:5;display:none">
+  <ins class="adsbygoogle" style="display:block;width:160px;height:600px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="AD_SLOT_RIGHT_160x600" data-ad-format="fixed"></ins>
+</div>
 <div id="versus-hud"><div class="vs-card vs-me" id="vs-me"></div><div style="color:#ff3355;font-size:18px;font-weight:900;align-self:center;text-shadow:0 0 10px #ff3355">VS</div><div class="vs-card vs-them" id="vs-them"></div></div>
 
 <!-- HUD -->
@@ -282,6 +295,14 @@ body{background:#000;overflow:hidden;font-family:'Courier New',monospace;touch-a
   <button class="btn" id="lb-close-btn">BACK TO GAME</button>
 </div>
 
+<!-- MULTIPLAYER LOADING -->
+<div id="loading-mp" style="position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:300;display:none;flex-direction:column;align-items:center;justify-content:center;gap:20px">
+  <h2 style="color:#00ffb4;letter-spacing:6px;font-size:22px;text-shadow:0 0 20px #00ffb4">SYNCING PILOTS</h2>
+  <div style="width:260px;height:4px;background:rgba(0,255,180,.12);border-radius:2px;overflow:hidden"><div style="height:100%;background:#00ffb4;border-radius:2px;animation:loadpulse 1.2s ease-in-out infinite"></div></div>
+  <div id="load-players" style="color:#ffdd00;font-size:13px;letter-spacing:2px;margin-top:6px"></div>
+  <p style="color:rgba(0,255,180,.4);font-size:10px;letter-spacing:3px">ESTABLISHING QUANTUM LINK...</p>
+</div>
+
 <!-- PAUSE OVERLAY -->
 <div id="pause-overlay">
   <div id="pause-box">
@@ -348,16 +369,7 @@ async function authLogin(name){
   if(name.length<2)return{err:'NAME TOO SHORT'};
   // Toujours accepter - essayer Supabase en arriere-plan
   // Check if name is locked by another session (tab/device protection)
-  // Device-based lock: each device gets one name slot
-  try{
-    var myDev=DEVICE_ID;
-    var prevName=localStorage.getItem('vf_device_name');
-    // If this device already claimed a different name, block
-    if(prevName&&prevName!==name){
-      return{err:'THIS DEVICE ALREADY HAS NAME: '+prevName+' (clear site data to reset)'};
-    }
-    localStorage.setItem('vf_device_name',name);
-  }catch(e){}
+  // No device lock - anyone can choose any name
   CURRENT_USER={username:name,best_score:0,play_time:0,kills:0,credits:0};
   try{
     var local=JSON.parse(localStorage.getItem('vf_profile_'+name)||'null');
@@ -527,9 +539,20 @@ function startRealtime(roomKey){
         var d=payload.payload||{};
         MP_MODE=d.mode||'coop';
         document.getElementById('mp-screen').style.display='none';
-        start();
-        if(MP_MODE==='versus'){enableVersusHUD();}
-        showMsgIn(MP_MODE==='versus'?'COMPETITION STARTED!':'CO-OP STARTED!',2000);
+        var ld2=document.getElementById('loading-mp');
+        var lp2=document.getElementById('load-players');
+        ld2.style.display='flex';
+        var ct2=3,ci2=setInterval(function(){
+          ct2--;
+          if(ct2>0){lp2.textContent='LAUNCHING IN '+ct2+'...';}
+          else{
+            clearInterval(ci2);ld2.style.display='none';
+            start();
+            if(MP_MODE==='versus'){enableVersusHUD();}
+            showMsgIn(MP_MODE==='versus'?'COMPETITION!':'CO-OP!',2000);
+          }
+        },1000);
+        lp2.textContent='LAUNCHING IN 3...';
       }
     })
     .on('broadcast',{event:'kill'},function(payload){
@@ -604,7 +627,7 @@ function broadcastPos(){
 
 function renderRoomPlayers(players){
   var el=document.getElementById('mp-players');if(!el)return;el.innerHTML='';
-  players.forEach(function(p,i){
+  players.filter(function(p){return p.name!=='__START__';}).forEach(function(p,i){
     var d=document.createElement('div');d.className='mp-player'+(i===0?' host':'');
     d.textContent=(i===0?'[HOST] ':'')+p.name+'  --  SCORE: '+(p.score||0)+'  LVL: '+(p.lvl||1);
     el.appendChild(d);
@@ -1198,6 +1221,8 @@ function lvlUp(){
 function clearWorld(){while(ENES.length){S.remove(ENES.pop());}while(BULS.length){S.remove(BULS.pop().mesh);}while(PARTS.length){S.remove(PARTS.pop().mesh);}if(G.boss){S.remove(G.boss);G.boss=null;}}
 function start(){
   clearWorld();  var sh=SHIPS[activeShip];
+  document.getElementById('ad-left').style.display='none';
+  document.getElementById('ad-right').style.display='none';
   G.hp=sh.hp;G.hpM=sh.hp;G.sh=sh.hp;G.shM=sh.hp*sh.shMult;
   G.score=0;G.lvl=1;G.kills=0;G.need=5;
   G.wpn=0;G.uwpn=2;G.bossOn=false;G.boss=null;G.bossHp=0;G.bossHpM=0;
@@ -1271,6 +1296,9 @@ document.getElementById('lb-btn').addEventListener('click',function(){openLeader
 function gameOver(quit){
   G.run=false;
   document.getElementById("versus-hud").style.display="none";
+  document.getElementById('ad-left').style.display='block';
+  document.getElementById('ad-right').style.display='block';
+  try{(adsbygoogle=window.adsbygoogle||[]).push({});(adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}
   var isNewBest=G.score>G.best;
   if(isNewBest){G.best=G.score;try{localStorage.setItem('vf_best',G.best);}catch(e){}}
   saveCredits();
@@ -1764,6 +1792,8 @@ document.getElementById('mp-solo-btn').addEventListener('click',function(){
 
 document.getElementById('leave-room-btn').addEventListener('click',function(){
   ROOM_KEY=null;IS_HOST=false;stopRoomPoll();stopRealtime();
+  document.getElementById('join-room-btn').disabled=false;document.getElementById('join-room-btn').style.opacity='1';
+  document.getElementById('create-room-btn').disabled=false;document.getElementById('create-room-btn').style.opacity='1';
   document.getElementById('room-status').style.display='none';
   document.getElementById('room-key-display').style.display='none';
   document.getElementById('leave-room-btn').style.display='none';
@@ -1780,6 +1810,10 @@ document.getElementById('create-room-btn').addEventListener('click',async functi
   document.getElementById('join-key-input').value=key;
   IS_HOST=true;
   startRealtime(key);
+  document.getElementById('join-room-btn').disabled=true;
+  document.getElementById('join-room-btn').style.opacity='.3';
+  document.getElementById('create-room-btn').disabled=true;
+  document.getElementById('create-room-btn').style.opacity='.3';
   document.getElementById('room-status').style.display='block';
   document.getElementById('room-status-txt').textContent='YOU ARE HOST -- SHARE THE KEY WITH YOUR FRIEND';
   document.getElementById('leave-room-btn').style.display='inline-flex';
@@ -1815,9 +1849,23 @@ document.getElementById('start-game-btn').addEventListener('click',async functio
   if(SB){try{await SB.from('private_rooms').update({players:JSON.stringify([{name:'__START__',score:0,lvl:1}])}).eq('room_key',ROOM_KEY);}catch(e){}}
   document.getElementById('mp-screen').style.display='none';
   stopRoomPoll();
-  start();
-  if(MP_MODE==='versus'){enableVersusHUD();}
-  showMsgIn(MP_MODE==='versus'?'COMPETITION!':'CO-OP STARTED!',2000);
+  // Show loading screen for 3s so all players can sync
+  var ld=document.getElementById('loading-mp');
+  var lp=document.getElementById('load-players');
+  ld.style.display='flex';
+  var ct=3;
+  lp.textContent='LAUNCHING IN '+ct+'...';
+  var ci=setInterval(function(){
+    ct--;
+    if(ct>0){lp.textContent='LAUNCHING IN '+ct+'...';}
+    else{
+      clearInterval(ci);
+      ld.style.display='none';
+      start();
+      if(MP_MODE==='versus'){enableVersusHUD();}
+      showMsgIn(MP_MODE==='versus'?'COMPETITION!':'CO-OP!',2000);
+    }
+  },1000);
 });
 
 //  One-time English UI setup 
