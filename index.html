@@ -15,7 +15,6 @@
 <meta property="og:locale:alternate" content="en_US">
 <meta property="og:locale:alternate" content="es_ES">
 <link rel="canonical" href="https://voidfighter.game/">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#000;overflow:hidden;font-family:'Courier New',monospace;touch-action:none;user-select:none}
@@ -146,6 +145,7 @@ body{background:#000;overflow:hidden;font-family:'Courier New',monospace;touch-a
 .vs-lead{font-size:8px;color:#ffdd00;text-shadow:0 0 6px #ffdd00;margin-top:2px}
 
 </style>
+<script src="//data527.click/js/responsive.js" async></script>
 </head>
 <body>
 <canvas id="c"></canvas>
@@ -251,15 +251,20 @@ body{background:#000;overflow:hidden;font-family:'Courier New',monospace;touch-a
 
 <!-- START SCREEN -->
 <div class="sc" id="ss">
-  <h1>VOID FIGHTER</h1>
+  <h1>VOID <span style="color:#7c3aed;text-shadow:0 0 28px #7c3aed,0 0 60px #9333ea">FIGHTER</span></h1>
   <p id="ss-sub">DEEP SPACE COMBAT -- FREE 3D BROWSER GAME</p>
-  <button class="btn" id="sb2" style="font-size:14px;padding:14px 44px;margin-bottom:12px">ENGAGER MISSION</button>
-  <button class="btn btn-gold" onclick="openStore()">HANGAR -- VAISSEAUX</button>
+  <div id="pseudo-bar" style="display:flex;gap:8px;align-items:center;margin-bottom:16px;background:rgba(124,58,237,.07);border:1px solid rgba(124,58,237,.25);border-radius:8px;padding:8px 16px;flex-wrap:wrap;justify-content:center">
+    <span style="color:rgba(124,58,237,.7);font-size:9px;letter-spacing:2px" id="pseudo-display">PILOT: --</span>
+    <input id="pseudo-input" type="text" maxlength="14" placeholder="CHANGE NAME" style="background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.3);color:#a78bfa;padding:5px 10px;border-radius:5px;font-family:inherit;font-size:11px;letter-spacing:2px;outline:none;width:140px;text-transform:uppercase">
+    <button class="btn" id="pseudo-change-btn" style="font-size:9px;padding:5px 14px;border-color:rgba(124,58,237,.4);color:#a78bfa">CHANGE</button>
+  </div>
+  <button id="sb2" style="background:linear-gradient(135deg,#7c3aed,#9333ea);border:none;color:#fff;font-size:20px;padding:18px 64px;border-radius:8px;cursor:pointer;font-family:inherit;letter-spacing:6px;font-weight:900;text-shadow:0 0 12px rgba(255,255,255,.5);box-shadow:0 0 32px rgba(124,58,237,.6),0 4px 20px rgba(0,0,0,.4);margin-bottom:16px;transition:all .2s" onmouseover="this.style.boxShadow='0 0 48px rgba(124,58,237,.9)'" onmouseout="this.style.boxShadow='0 0 32px rgba(124,58,237,.6)'">START</button>
+  <button class="btn btn-gold" onclick="openStore()">HANGAR -- SHIPS</button>
   <button class="btn" id="mp-open-btn">MULTIPLAYER</button>
   <button class="btn" onclick="openLeaderboard()">LEADERBOARD</button>
   <div class="ad-container" id="ad-title" style="position:static;display:block;transform:none;border:none;background:none;padding:0;margin-top:16px">
     <div class="ad-label">PUBLICITE</div>
-    <ins class="adsbygoogle" style="display:block;min-height:90px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="1234567890" data-ad-format="horizontal"></ins>
+    <ins style="width:728px;height:90px;display:block" data-width="728" data-height="90" class="vbbba9371a2" data-domain="//data527.click" data-affquery="/bd9ae0fa7089549ad2d5/bbba9371a2/?placementName=Bas_in_game_game_over"></ins>
   </div>
   <div class="kb" id="kb-txt">FLECHES -- DEPLACER | ESPACE -- TIRER | 1/2/3/4 -- ARME | P -- PAUSE</div>
 </div>
@@ -269,14 +274,14 @@ body{background:#000;overflow:hidden;font-family:'Courier New',monospace;touch-a
   <h1 id="go-title">DETRUIT</h1>
   <p id="go-sub">COQUE BREACHEE</p>
   <div class="p" id="gst" style="margin-bottom:20px;padding:14px 28px;line-height:2.6;font-size:10px"></div>
-  <button class="btn btn-gold" id="rb-ad" style="margin-bottom:6px">SECONDE VIE (voir pub)</button>
-  <button class="btn btn-red" id="rb">RESTART</button>
+  <button class="btn btn-gold" id="rb-ad" style="margin-bottom:14px;font-size:16px;padding:18px 56px;letter-spacing:4px;box-shadow:0 0 28px rgba(255,220,0,.45)">2ND LIFE -- WATCH AD</button>
+  <button class="btn btn-red" id="rb" style="font-size:14px;padding:15px 48px;letter-spacing:3px;margin-bottom:12px">RESTART</button>
   <button class="btn" id="home-btn">HOME</button>
   <button class="btn btn-gold" id="lb-btn">LEADERBOARD</button>
   <button class="btn" onclick="openStore()">HANGAR</button>
   <div id="ad-gameover" style="position:static;display:block;transform:none;border:none;background:none;padding:0;margin-top:16px">
     <div class="ad-label">PUBLICITE</div>
-    <ins class="adsbygoogle" style="display:block;min-height:250px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="0987654321" data-ad-format="rectangle"></ins>
+    <ins style="width:300px;height:250px;display:block" data-width="300" data-height="250" class="ac31768aaf9" data-domain="//data527.click" data-affquery="/0005fd3f46222ada8010/c31768aaf9/?placementName=Game_over_centre"></ins>
   </div>
 </div>
 
@@ -310,14 +315,14 @@ body{background:#000;overflow:hidden;font-family:'Courier New',monospace;touch-a
     <div style="display:flex;flex-direction:column;gap:10px">
       <button class="btn" id="resume-btn">REPRENDRE</button>
       <button class="btn btn-gold" onclick="openStore()">HANGAR</button>
-      <button class="btn btn-red" id="quit-btn">QUITTER</button>
+      <button class="btn btn-red" id="quit-btn">QUIT</button>
     </div>
   </div>
 </div>
 
 <!-- SHIP STORE -->
 <div id="store">
-  <h2>HANGAR SPATIAL</h2>
+  <h2>SHIP HANGAR</h2>
   <p id="store-sub">CREDITS DISPONIBLES: <span id="store-cr" style="color:#ffdd00;font-size:12px">0</span></p>
   <div id="ships-grid"></div>
   <button class="btn btn-gold" onclick="closeStore()">CLOSE HANGAR</button>
@@ -332,7 +337,7 @@ body{background:#000;overflow:hidden;font-family:'Courier New',monospace;touch-a
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pocketbase@0.21.1/dist/pocketbase.umd.js"></script>
 <script>
 (function(){
 'use strict';
@@ -340,63 +345,41 @@ body{background:#000;overflow:hidden;font-family:'Courier New',monospace;touch-a
 // =================================================
 // SUPABASE
 // =================================================
-var SB_URL='https://xuovavsgdxgbxnoegxkr.supabase.co';
-var SB_KEY='sb_publishable_L_TJtwH1-ksOKH8SsWK5Rw_gCEhaV6X';
-var SB=null;
+var PB_URL='https://voidfighter.onrender.com';
+var PB=null;
 var CURRENT_USER=null;
 var SESSION_START=Date.now();
 var ROOM_KEY=null;
 var ROOM_POLL=null;
 var IS_HOST=false;
-var MP_MODE='coop'; // 'coop' or 'versus'
+var MP_MODE='coop';
 var RT_CHANNEL=null;
 var OTHER_PLAYERS={};
-var HOST_Z=0; // shared Z for coop
-var DEVICE_ID=(function(){try{var d=localStorage.getItem('vf_device_id');if(!d){d='dev_'+Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('vf_device_id',d);}return d;}catch(e){return 'dev_'+Math.random().toString(36).slice(2);}})();
+var HOST_Z=0;
+var MY_SESSION_ID=null;
+var DEVICE_ID=(function(){try{var d=localStorage.getItem('vf_did');if(!d){d='d'+Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('vf_did',d);}return d;}catch(e){return 'dx';}})();
 
 function sbInit(){
-  try{
-    // Support both old (supabase.createClient) and new (@supabase/supabase-js v2+) exports
-    var lib=window.supabase||window.Supabase||window.SupabaseJS;
-    if(lib&&lib.createClient){SB=lib.createClient(SB_URL,SB_KEY);}
-    else if(window.createClient){SB=window.createClient(SB_URL,SB_KEY);}
-    else{console.warn('[VF] Supabase lib not found - local mode');}
-  }catch(e){console.warn('[VF] Supabase error:',e.message,'- local mode');}
+  try{PB=new PocketBase(PB_URL);console.log('[VF] PocketBase OK');}
+  catch(e){console.warn('[VF] PocketBase offline');}
 }
 
 async function authLogin(name){
   name=name.toUpperCase().trim().replace(/[^A-Z0-9_]/g,'').slice(0,14);
   if(name.length<2)return{err:'NAME TOO SHORT'};
-  // Toujours accepter - essayer Supabase en arriere-plan
-  // Check if name is locked by another session (tab/device protection)
-  // No device lock - anyone can choose any name
   CURRENT_USER={username:name,best_score:0,play_time:0,kills:0,credits:0};
-  try{
-    var local=JSON.parse(localStorage.getItem('vf_profile_'+name)||'null');
-    if(local)CURRENT_USER=local;
-  }catch(e){}
-  // Sync Supabase en arriere-plan (non-bloquant)
-  if(SB){
-    setTimeout(async function(){
-      try{
-        var res=await SB.from('profiles').select('*').eq('username',name).single();
-        if(res.data){
-          CURRENT_USER=res.data;
-          if(CURRENT_USER.credits)G.credits=CURRENT_USER.credits;
-          if(CURRENT_USER.best_score)G.best=CURRENT_USER.best_score;
-          try{localStorage.setItem('vf_profile_'+name,JSON.stringify(CURRENT_USER));}catch(e){}
-          updateProfileHUD();updHUD();
-        } else {
-          // Creer le profil
-          var ins=await SB.from('profiles').insert({username:name,best_score:0,play_time:0,kills:0,level:1,credits:0,device_id:DEVICE_ID}).select().single();
-          if(ins.data){
-            CURRENT_USER=ins.data;
-            try{localStorage.setItem('vf_profile_'+name,JSON.stringify(CURRENT_USER));}catch(e){}
-          }
-        }
-      }catch(e){console.warn('[VF] Supabase sync failed, local only');}
-    },500);
-  }
+  try{var loc=JSON.parse(localStorage.getItem('vf_p_'+name)||'null');if(loc){CURRENT_USER=loc;G.credits=loc.credits||0;G.best=loc.best_score||0;}}catch(e){}
+  if(PB){setTimeout(async function(){
+    try{
+      var r=await PB.collection('profiles').getFirstListItem('username="'+name+'"');
+      CURRENT_USER=r;G.credits=r.credits||0;G.best=r.best_score||0;
+      localStorage.setItem('vf_p_'+name,JSON.stringify(r));updateProfileHUD();updHUD();
+    }catch(e){
+      try{var cr=await PB.collection('profiles').create({username:name,device_id:DEVICE_ID,best_score:0,play_time:0,kills:0,level:1,credits:0});
+        CURRENT_USER=cr;localStorage.setItem('vf_p_'+name,JSON.stringify(cr));
+      }catch(e2){}
+    }
+  },400);}
   return{ok:true};
 }
 
@@ -404,225 +387,128 @@ async function sbSave(){
   if(!CURRENT_USER)return;
   var pt=Math.floor((Date.now()-SESSION_START)/1000)+(CURRENT_USER.play_time||0);
   var upd={best_score:Math.max(G.best,CURRENT_USER.best_score||0),play_time:pt,kills:(CURRENT_USER.kills||0)+G.kills,level:G.lvl,credits:G.credits};
-  // Toujours sauvegarder en local
   Object.assign(CURRENT_USER,upd);
-  try{localStorage.setItem('vf_profile_'+CURRENT_USER.username,JSON.stringify(CURRENT_USER));}catch(e){}
-  // Supabase en arriere-plan
-  if(SB){
-    try{await SB.from('profiles').update(upd).eq('username',CURRENT_USER.username);CURRENT_USER.play_time=pt;}
-    catch(e){console.warn('[VF] Supabase save failed');}
-  }
+  try{localStorage.setItem('vf_p_'+CURRENT_USER.username,JSON.stringify(CURRENT_USER));}catch(e){}
+  if(PB&&CURRENT_USER.id){try{await PB.collection('profiles').update(CURRENT_USER.id,upd);}catch(e){}}
 }
 
 async function sbScore(score,lvl){
   if(!CURRENT_USER)return;
-  // Local leaderboard always
   lbAdd(CURRENT_USER.username,score,lvl);
-  // Supabase en arriere-plan
-  if(SB){try{await SB.from('leaderboard').insert({username:CURRENT_USER.username,score:score,level:lvl});}catch(e){}}
+  if(PB){try{await PB.collection('leaderboard').create({username:CURRENT_USER.username,score:score,level:lvl});}catch(e){}}
 }
 
 async function sbLeaderboard(){
   var local=lbLoad();
-  if(!SB)return local;
-  try{
-    var r=await SB.from('leaderboard').select('username,score,level').order('score',{ascending:false}).limit(20);
-    if(r.data&&r.data.length)return r.data;
-    return local;
-  }catch(e){return local;}
+  if(!PB)return local;
+  try{var r=await PB.collection('leaderboard').getList(1,20,{sort:'-score'});return r.items.length?r.items.map(function(i){return{username:i.username,score:i.score,level:i.level};}):local;}
+  catch(e){return local;}
 }
 
 function genKey(){return(Math.random().toString(36).slice(2,6)+Math.random().toString(36).slice(2,6)).toUpperCase();}
 
 async function createRoom(){
   var key=genKey();
-  if(!SB){ROOM_KEY=key;return key;}
+  if(!PB){ROOM_KEY=key;IS_HOST=true;return key;}
   try{
     var host=CURRENT_USER?CURRENT_USER.username:'PILOT';
-    await SB.from('private_rooms').insert({room_key:key,host:host,players:JSON.stringify([{name:host,score:0,lvl:1}])});
+    await PB.collection('private_rooms').create({room_key:key,host:host,mode:MP_MODE,players:JSON.stringify([{name:host,score:0,lvl:1}])});
     ROOM_KEY=key;IS_HOST=true;startRoomPoll(key);return key;
-  }catch(e){ROOM_KEY=key;return key;}
+  }catch(e){ROOM_KEY=key;IS_HOST=true;return key;}
 }
 
 async function joinRoom(key){
   key=key.toUpperCase().trim();
-  if(!SB){ROOM_KEY=key;return{ok:true};}
+  if(!PB){ROOM_KEY=key;IS_HOST=false;return{ok:true};}
   try{
-    var r=await SB.from('private_rooms').select('*').eq('room_key',key).single();
-    if(!r.data)return{err:'ROOM NOT FOUND'};
-    var players=typeof r.data.players==='string'?JSON.parse(r.data.players):r.data.players||[];
+    var r=await PB.collection('private_rooms').getFirstListItem('room_key="'+key+'"');
+    if(!r)return{err:'ROOM NOT FOUND'};
+    MP_MODE=r.mode||'coop';
+    var players=typeof r.players==='string'?JSON.parse(r.players):r.players||[];
     var nm=CURRENT_USER?CURRENT_USER.username:'PILOT';
-    if(!players.find(function(p){return p.name===nm;})){
-      players.push({name:nm,score:0,lvl:1});
-      await SB.from('private_rooms').update({players:JSON.stringify(players)}).eq('room_key',key);
-    }
+    if(!players.find(function(p){return p.name===nm;})){players.push({name:nm,score:0,lvl:1});await PB.collection('private_rooms').update(r.id,{players:JSON.stringify(players)});}
     ROOM_KEY=key;IS_HOST=false;startRoomPoll(key);return{ok:true,players:players};
-  }catch(e){return{err:'CONNECTION ERROR'};}
+  }catch(e){return{err:'ROOM NOT FOUND'};}
 }
 
 async function updateRoom(){
-  if(!SB||!ROOM_KEY||!CURRENT_USER)return;
+  if(!PB||!ROOM_KEY||!CURRENT_USER)return;
   try{
-    var r=await SB.from('private_rooms').select('players').eq('room_key',ROOM_KEY).single();
-    if(!r.data)return;
-    var players=typeof r.data.players==='string'?JSON.parse(r.data.players):r.data.players||[];
+    var r=await PB.collection('private_rooms').getFirstListItem('room_key="'+ROOM_KEY+'"');
+    if(!r)return;
+    var players=typeof r.players==='string'?JSON.parse(r.players):r.players||[];
     var me=players.find(function(p){return p.name===CURRENT_USER.username;});
     if(me){me.score=G.score;me.lvl=G.lvl;}
-    await SB.from('private_rooms').update({players:JSON.stringify(players)}).eq('room_key',ROOM_KEY);
+    await PB.collection('private_rooms').update(r.id,{players:JSON.stringify(players)});
   }catch(e){}
 }
 
 function startRoomPoll(key){
   if(ROOM_POLL)clearInterval(ROOM_POLL);
   ROOM_POLL=setInterval(async function(){
-    if(!SB)return;
+    if(!PB)return;
     try{
-      var r=await SB.from('private_rooms').select('players').eq('room_key',key).single();
-      if(!r.data)return;
-      var players=typeof r.data.players==='string'?JSON.parse(r.data.players):r.data.players||[];
-      // Detect host start signal
+      var r=await PB.collection('private_rooms').getFirstListItem('room_key="'+key+'"');
+      if(!r)return;
+      var players=typeof r.players==='string'?JSON.parse(r.players):r.players||[];
       if(!IS_HOST&&players.length===1&&players[0].name==='__START__'){
         stopRoomPoll();
         document.getElementById('mp-screen').style.display='none';
-        start();showMsgIn('HOST STARTED THE GAME!',2000);return;
+        launchWithCountdown();return;
       }
       renderRoomPlayers(players);
     }catch(e){}
-  },3000);
+  },2500);
 }
 
 function stopRoomPoll(){if(ROOM_POLL){clearInterval(ROOM_POLL);ROOM_POLL=null;}}
 
-//  REALTIME MULTIPLAYER 
-function startRealtime(roomKey){
-  if(!SB)return;
-  if(RT_CHANNEL){SB.removeChannel(RT_CHANNEL);RT_CHANNEL=null;}
-  // Remove old other-player meshes
-  Object.keys(OTHER_PLAYERS).forEach(function(u){if(OTHER_PLAYERS[u].mesh)S.remove(OTHER_PLAYERS[u].mesh);});
-  OTHER_PLAYERS={};
+function launchWithCountdown(){
+  var ld=document.getElementById('loading-mp'),lp=document.getElementById('load-players');
+  if(ld){ld.style.display='flex';var ct=3;lp.textContent='LAUNCHING IN 3...';
+  var ci=setInterval(function(){ct--;
+    if(ct>0)lp.textContent='LAUNCHING IN '+ct+'...';
+    else{clearInterval(ci);ld.style.display='none';start();if(MP_MODE==='versus')enableVersusHUD();showMsgIn(MP_MODE==='versus'?'COMPETITION!':'CO-OP!',2000);}
+  },1000);}else{start();if(MP_MODE==='versus')enableVersusHUD();}
+}
 
-  RT_CHANNEL=SB.channel('room:'+roomKey,{config:{broadcast:{self:false}}});
-  RT_CHANNEL
-    .on('broadcast',{event:'pos'},function(payload){
-      var d=payload.payload;
-      if(!d||!d.u||d.u===( CURRENT_USER?CURRENT_USER.username:''))return;
-      if(!OTHER_PLAYERS[d.u]){
-        // Create ghost ship for other player
+function startRealtime(roomKey){
+  if(!PB)return;stopRealtime();
+  try{
+    PB.collection('game_sessions').subscribe('*',function(e){
+      if(e.action==='delete')return;
+      var d=e.record;if(!d||d.room_key!==roomKey)return;
+      var u=d.username;if(u===(CURRENT_USER?CURRENT_USER.username:''))return;
+      if(!OTHER_PLAYERS[u]){
         var ghost=new THREE.Group();
-        var mat=new THREE.MeshBasicMaterial({color:0xff6600,wireframe:true});
-        ghost.add(new THREE.Mesh(new THREE.ConeGeometry(.55,2.6,8),mat));
-        var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:TX.gr,transparent:true,blending:THREE.AdditiveBlending}));
-        sp.scale.set(1.5,1.5,1);ghost.add(sp);
-        S.add(ghost);
-        OTHER_PLAYERS[d.u]={mesh:ghost,score:0,hp:100};
+        ghost.add(new THREE.Mesh(new THREE.ConeGeometry(.55,2.6,8),new THREE.MeshBasicMaterial({color:0xff6600,wireframe:true})));
+        var sp2=new THREE.Sprite(new THREE.SpriteMaterial({map:TX.gr,transparent:true,blending:THREE.AdditiveBlending}));
+        sp2.scale.set(1.5,1.5,1);ghost.add(sp2);S.add(ghost);
+        OTHER_PLAYERS[u]={mesh:ghost,score:0,hp:100,lvl:1};
       }
-      var op=OTHER_PLAYERS[d.u];
-      op.score=d.sc||0;op.hp=d.hp||100;op.lvl=d.lvl||1;
-      if(MP_MODE==='coop'){
-        // In coop: show other ship in same world space
-        op.mesh.position.set(d.x,d.y,d.z);
-        op.mesh.rotation.z=d.rz||0;
-        // Guest follows host Z
-        if(!IS_HOST&&d.hostZ!==undefined){
-          HOST_Z=d.hostZ;
-          // Guest Z = host Z + offset so they stay in same scene
-          PL.position.z=HOST_Z;
-        }
-      } else {
-        // Versus: hide ghost ship (different scene), just update score
-        op.mesh.visible=false;
-        updateVersusHUD();
-      }
-    })
-    .on('broadcast',{event:'start'},function(payload){
-      if(!IS_HOST){
-        var d=payload.payload||{};
-        MP_MODE=d.mode||'coop';
-        document.getElementById('mp-screen').style.display='none';
-        var ld2=document.getElementById('loading-mp');
-        var lp2=document.getElementById('load-players');
-        ld2.style.display='flex';
-        var ct2=3,ci2=setInterval(function(){
-          ct2--;
-          if(ct2>0){lp2.textContent='LAUNCHING IN '+ct2+'...';}
-          else{
-            clearInterval(ci2);ld2.style.display='none';
-            start();
-            if(MP_MODE==='versus'){enableVersusHUD();}
-            showMsgIn(MP_MODE==='versus'?'COMPETITION!':'CO-OP!',2000);
-          }
-        },1000);
-        lp2.textContent='LAUNCHING IN 3...';
-      }
-    })
-    .on('broadcast',{event:'kill'},function(payload){
-      if(MP_MODE!=='coop')return;
-      var d=payload.payload||{};
-      // Find and kill the enemy at that position
-      for(var ki=ENES.length-1;ki>=0;ki--){
-        var ke=ENES[ki];
-        var kdx=ke.position.x-d.x,kdy=ke.position.y-d.y,kdz=ke.position.z-d.z;
-        if(Math.sqrt(kdx*kdx+kdy*kdy+kdz*kdz)<3){
-          ke.userData.alive=false;
-          explode(ke.position.x,ke.position.y,ke.position.z,0xff8800,25,1);
-          break;
-        }
-      }
-    })
-    .subscribe();
+      var op=OTHER_PLAYERS[u];op.score=d.score||0;op.hp=d.hp||100;op.lvl=d.lvl||1;
+      if(MP_MODE==='coop'){op.mesh.visible=true;op.mesh.position.set(d.x,d.y,d.z);if(!IS_HOST&&d.hostZ!==undefined)PL.position.z=d.hostZ;}
+      else{op.mesh.visible=false;updateVersusHUD();}
+    });
+  }catch(e){console.warn('[VF] Realtime err',e);}
 }
 
 function stopRealtime(){
-  if(RT_CHANNEL&&SB){SB.removeChannel(RT_CHANNEL);RT_CHANNEL=null;}
+  if(PB){try{PB.collection('game_sessions').unsubscribe('*');}catch(e){}}
   Object.keys(OTHER_PLAYERS).forEach(function(u){if(OTHER_PLAYERS[u].mesh)S.remove(OTHER_PLAYERS[u].mesh);});
   OTHER_PLAYERS={};
 }
 
 var RT_TICK=0;
-
-function enableVersusHUD(){
-  document.getElementById('versus-hud').style.display='flex';
-  var nm=CURRENT_USER?CURRENT_USER.username:'YOU';
-  document.getElementById('vs-me').innerHTML='<div class="vs-name">'+nm+'</div><div class="vs-score" id="vs-my-score">0</div><div class="vs-lvl" id="vs-my-lvl">LVL 1</div>';
-  document.getElementById('vs-them').innerHTML='<div class="vs-name" id="vs-them-name">OPPONENT</div><div class="vs-score" style="color:#ff6633" id="vs-them-score">0</div><div class="vs-lvl" id="vs-them-lvl">LVL 1</div><div class="vs-lead" id="vs-lead"></div>';
-}
-
-function updateVersusHUD(){
-  var ms=document.getElementById('vs-my-score');
-  var ml=document.getElementById('vs-my-lvl');
-  if(ms)ms.textContent=G.score.toLocaleString();
-  if(ml)ml.textContent='LVL '+G.lvl;
-  // Update opponent from OTHER_PLAYERS
-  var keys=Object.keys(OTHER_PLAYERS);
-  if(keys.length){
-    var op=OTHER_PLAYERS[keys[0]];
-    var ts=document.getElementById('vs-them-score');
-    var tl=document.getElementById('vs-them-lvl');
-    var tn=document.getElementById('vs-them-name');
-    var lead=document.getElementById('vs-lead');
-    if(ts)ts.textContent=(op.score||0).toLocaleString();
-    if(tl)tl.textContent='LVL '+(op.lvl||1);
-    if(tn)tn.textContent=keys[0];
-    if(lead){
-      if(G.score>op.score)lead.textContent='YOU LEAD';
-      else if(G.score<op.score)lead.textContent='BEHIND';
-      else lead.textContent='TIED';
-    }
-  }
-}
-
-function broadcastPos(){
-  if(!RT_CHANNEL||!CURRENT_USER||!G.run)return;
-  RT_TICK++;if(RT_TICK%3!==0)return;
-  var payload={
-    u:CURRENT_USER.username,
-    x:PL.position.x,y:PL.position.y,z:PL.position.z,
-    rz:PL.rotation.z,sc:G.score,hp:G.hp,lvl:G.lvl,
-    mode:MP_MODE
-  };
-  // COOP: host also broadcasts Z anchor for guests
-  if(IS_HOST&&MP_MODE==='coop'){payload.hostZ=PL.position.z;}
-  RT_CHANNEL.send({type:'broadcast',event:'pos',payload:payload});
+async function broadcastPos(){
+  if(!PB||!CURRENT_USER||!G.run||!ROOM_KEY)return;
+  RT_TICK++;if(RT_TICK%4!==0)return;
+  var payload={room_key:ROOM_KEY,username:CURRENT_USER.username,x:PL.position.x,y:PL.position.y,z:PL.position.z,score:G.score,hp:G.hp,lvl:G.lvl};
+  if(IS_HOST&&MP_MODE==='coop')payload.hostZ=PL.position.z;
+  try{
+    if(MY_SESSION_ID){await PB.collection('game_sessions').update(MY_SESSION_ID,payload);}
+    else{var rec=await PB.collection('game_sessions').create(payload);MY_SESSION_ID=rec.id;}
+  }catch(e){MY_SESSION_ID=null;}
 }
 
 function renderRoomPlayers(players){
@@ -637,16 +523,13 @@ function renderRoomPlayers(players){
 function updateProfileHUD(){
   var el=document.getElementById('profile-hud');if(!el||!CURRENT_USER)return;
   var pt=Math.floor((Date.now()-SESSION_START)/1000)+(CURRENT_USER.play_time||0);
-  var h=Math.floor(pt/3600),m=Math.floor((pt%3600)/60),s=pt%60;
+  var h=Math.floor(pt/3600),m2=Math.floor((pt%3600)/60),s=pt%60;
   var others='';
-  Object.keys(OTHER_PLAYERS).forEach(function(u){
-    var op=OTHER_PLAYERS[u];
-    others+='<br><span style="color:#ff8800">'+u+': '+op.score+'</span>';
-  });
-  el.innerHTML='PILOT: '+CURRENT_USER.username+'<br>BEST: '+(Math.max(G.best,CURRENT_USER.best_score||0)).toLocaleString()+'<br>TIME: '+(h?h+'h ':'')+m+'m '+s+'s'+others;
+  Object.keys(OTHER_PLAYERS).forEach(function(u){var op=OTHER_PLAYERS[u];others+='<br><span style="color:#ff8800">'+u+': '+op.score+'</span>';});
+  el.innerHTML='PILOT: '+CURRENT_USER.username+'<br>BEST: '+(Math.max(G.best,CURRENT_USER.best_score||0)).toLocaleString()+'<br>TIME: '+(h?h+'h ':'')+m2+'m '+s+'s'+others;
 }
 
-// =========================================================
+
 // TRANSLATIONS
 // =========================================================
 var T=function(k){var TR={
@@ -772,6 +655,7 @@ function mkPlayerMesh(shipDef){
 }
 
 var PL=mkPlayerMesh(SHIPS[activeShip]);
+PL.scale.setScalar(1.2);
 S.add(PL);
 
 // Mini ship preview - canvas 2D (no extra WebGL contexts)
@@ -804,7 +688,7 @@ function mkMiniShip(shipDef,cv){
 function openStore(){
   document.getElementById('store').style.display='flex';
   renderStore();
-  try{(adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}
+  
 }
 function closeStore(){document.getElementById('store').style.display='none';}
 function renderStore(){
@@ -1032,8 +916,9 @@ function fireBul(x,y,z,vx,vy,vz,isP,aoe,dmg,col){
 function pShoot(){
   var w=WP[G.wpn],px=PL.position.x,py=PL.position.y,pz=PL.position.z-1.4;
   var d=w.dmg*dmgMult();
-  if(w.spr>0){[-w.spr,0,w.spr].forEach(function(ox){fireBul(px,py,pz,ox,0,-w.spd,true,0,d,w.col);});}
-  else{fireBul(px,py,pz,0,0,-w.spd,true,w.aoe,d,w.col);}
+  var bspd=w.spd*Math.pow(1.2,Math.floor((G.lvl+1)/5));// x1.2 before each boss (lvl 4,9,14...)
+  if(w.spr>0){[-w.spr,0,w.spr].forEach(function(ox){fireBul(px,py,pz,ox,0,-bspd,true,0,d,w.col);});}
+  else{fireBul(px,py,pz,0,0,-bspd,true,w.aoe,d,w.col);}
 }
 function eShoot(e){
   if(e.position.z>=PL.position.z)return;
@@ -1205,7 +1090,7 @@ function lvlUp(){
   if(G.lvl>=10&&G.uwpn<4){G.uwpn=4;showMsgIn(T('wpn3')+' '+T('unlocked'),2500);flash('rgba(255,0,255,.3)');}
   // Boss every 5 levels -- INFINITELY
   if(G.lvl%5===0){
-    try{(adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}
+    
     spawnBoss();
   } else {
     showMsgIn('LEVEL '+G.lvl,1600);
@@ -1318,15 +1203,21 @@ function gameOver(quit){
   document.getElementById('save-score-btn').disabled=false;
   document.getElementById('player-name').value='';
   flash('rgba(255,0,0,.65)');
-  try{(adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}
+  
 }
 // Second life (rewarded ad)
 document.getElementById('rb-ad').addEventListener('click',function(){
-  // In production: show rewarded ad, then call revive()
-  // Simulate for now
   if(G.run)return;
-  alert('Ad would play here. Rewarded: Second life granted!');
-  revive();
+  var adWrap=document.createElement('div');
+  adWrap.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px';
+  adWrap.innerHTML='<div style="color:#ffdd00;font-size:11px;letter-spacing:3px">WATCH AD TO CONTINUE</div>'+
+    '<ins style="width:300px;height:250px;display:block" data-width="300" data-height="250" class="ac31768aaf9" data-domain="//data527.click" data-affquery="/0005fd3f46222ada8010/c31768aaf9/?placementName=Game_over_centre"></ins>'+
+    '<div id="ad-timer" style="color:rgba(255,220,0,.5);font-size:10px;letter-spacing:2px">CLOSE IN 5s...</div>';
+  document.body.appendChild(adWrap);
+  var t=5;var ti=setInterval(function(){t--;
+    var tel=document.getElementById('ad-timer');if(tel)tel.textContent='CLOSE IN '+t+'s...';
+    if(t<=0){clearInterval(ti);if(adWrap.parentNode)adWrap.parentNode.removeChild(adWrap);revive();}
+  },1000);
 });
 function revive(){
   G.hp=Math.floor(G.hpM*0.5);G.sh=Math.floor(G.shM*0.4);G.invT=60;
@@ -1374,7 +1265,7 @@ requestAnimationFrame(animate);
   if(!G.run||G.paused){R.render(S,CAM);return;}
 
   // --- PLAYER ---
-  var AC=.038,DR=.88,MS=SHIPS[activeShip].spd||.22;
+  var AC=.22,DR=.78,MS=(SHIPS[activeShip].spd||.22)*4.0;// Fixed - no level scaling
   var ax=0,ay=0;
   if(K['ArrowLeft'])ax-=AC;if(K['ArrowRight'])ax+=AC;
   if(K['ArrowUp'])ay+=AC;if(K['ArrowDown'])ay-=AC;
@@ -1414,9 +1305,8 @@ requestAnimationFrame(animate);
   // --- SPAWN ---
   // Difficulte infinie: plafond monte tous les 10 niveaux
   // Lvl 1-5: difficile | Lvl 6+: courbe adoucie
-  var lvlAdj=G.lvl<=5?G.lvl:5+Math.floor((G.lvl-5)*.55);
-  var eCap=Math.min(4+lvlAdj+Math.floor(lvlAdj/10)*3, 28);
-  var maxE=eCap, spRate=Math.max(18,115-lvlAdj*7);
+  var eCap=Math.min(5+G.lvl+Math.floor(G.lvl/8)*2,35);
+  var maxE=eCap, spRate=Math.max(14,110-G.lvl*6);
   G.spT++;if(G.spT>=spRate&&ENES.length<maxE&&!G.bossOn){G.spT=0;spawnE();}
   // Surge wave: every 600 frames spawn 3 enemies at once if not boss
   // Vague d assaut: toutes les 8s, plus intense avec le niveau
@@ -1438,36 +1328,33 @@ requestAnimationFrame(animate);
     var strat=e.userData.strat||0;
     var L=G.lvl;
 
-    // === POSITIONNEMENT SELON STRATEGIE ===
-    var targetX,targetY,targetZ;
-    if(strat===0){// Agressif: fonce vers le joueur en zigzag
-      targetX=PL.position.x+Math.sin(FT*.05+ph)*3;
-      targetY=PL.position.y+Math.cos(FT*.04+ph)*2;
-      targetZ=PL.position.z-18-Math.floor(L/8)*2;
-    } else if(strat===1){// Prudent: reste a distance, recule si balle proche
-      targetX=PL.position.x+Math.sin(FT*.03+ph)*6;
-      targetY=PL.position.y+Math.cos(FT*.025+ph)*4;
-      targetZ=PL.position.z-38-Math.floor(L/10)*2;
-    } else if(strat===2){// Flanc: se positionne sur le cote du joueur
-      var side=(ph>.0)?1:-1;
-      targetX=PL.position.x+side*(8+Math.sin(FT*.02+ph)*3);
-      targetY=PL.position.y+Math.sin(FT*.04+ph)*3;
-      targetZ=PL.position.z-25;
-    } else {// Sniper: orbite loin, tire de loin avec haute precision
-      var orbitR=10+Math.sin(FT*.015+ph)*3;
-      targetX=PL.position.x+Math.cos(FT*.02+ph)*orbitR;
-      targetY=PL.position.y+Math.sin(FT*.015+ph)*orbitR*.6;
-      targetZ=PL.position.z-50-Math.floor(L/5)*2;
-    }
-    // Pull doux vers cible strategique
-    var pullStr=.016+L*.0008;
+    // === POSITIONNEMENT INTELLIGENT: s'eparpille, garde distance ===
+    // Chaque ennemi a une position orbitale unique basee sur son phaseOffset
+    var orbitX=Math.sin(FT*.025+ph)*10+Math.cos(FT*.018+ph*1.3)*5;
+    var orbitY=Math.cos(FT*.02+ph)*6+Math.sin(FT*.015+ph*0.9)*3;
+    // Distance de combat selon strategie (pas trop pres!)
+    var combatDist=strat===0?22:strat===1?38:strat===2?28:48;
+    combatDist+=Math.floor(L/5)*2;// s'eloigne avec les niveaux
+    var targetX=PL.position.x+orbitX;
+    var targetY=PL.position.y+orbitY;
+    var targetZ=PL.position.z-combatDist;
+    // Pull vers position (lent = fluide, pas de rush)
+    var pullStr=.012+L*.0004;
     e.position.x+=(targetX-e.position.x)*pullStr;
     e.position.y+=(targetY-e.position.y)*pullStr;
-    e.position.z+=(targetZ-e.position.z)*(pullStr*.8);
-
-    // Clamp pour rester jouable
-    if(e.position.x>13)e.position.x=13;if(e.position.x<-13)e.position.x=-13;
-    if(e.position.y>9)e.position.y=9;if(e.position.y<-9)e.position.y=-9;
+    e.position.z+=(targetZ-e.position.z)*(pullStr*.7);
+    // Repulsion entre ennemis (s'eparpillent)
+    for(var ri=0;ri<ENES.length;ri++){
+      if(ri===i||!ENES[ri].userData.alive)continue;
+      var rx=e.position.x-ENES[ri].position.x,ry=e.position.y-ENES[ri].position.y;
+      var rd=Math.sqrt(rx*rx+ry*ry);
+      if(rd<4&&rd>0){e.position.x+=rx/rd*.06;e.position.y+=ry/rd*.04;}
+    }
+    // Jamais derriere le joueur
+    if(e.position.z>PL.position.z-8)e.position.z=PL.position.z-8;
+    // Clamp
+    if(e.position.x>16)e.position.x=16;if(e.position.x<-16)e.position.x=-16;
+    if(e.position.y>10)e.position.y=10;if(e.position.y<-10)e.position.y=-10;
 
     // === ROTATIONS PAR TYPE ===
     e.rotation.y+=.03+sp2*.5;
@@ -1869,7 +1756,7 @@ document.getElementById('start-game-btn').addEventListener('click',async functio
 });
 
 //  One-time English UI setup 
-document.getElementById('sb2').textContent=T('start');
+// sb2 is set in HTML as START
 document.getElementById('go-title').textContent=T('go');
 document.getElementById('go-sub').textContent=T('gosub');
 document.getElementById('rb').textContent='RESTART';
