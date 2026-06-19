@@ -14,6 +14,7 @@
 <meta property="og:locale" content="fr_FR">
 <meta property="og:locale:alternate" content="en_US">
 <meta property="og:locale:alternate" content="es_ES">
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACXUlEQVR4nO2bzXHDIBCF15mMZlRHSvAhTaQD1+cO0kQOLiF1aEYX5xAhI1h+Fha0IL1LnDgjeB9vMZYA4NSxdana2vP7Gf2/l68qfSvbCMVwSIWAlAHgMD6Mt+hLzNMdf4MZBN/FENMUwyGhQBhg8AAwzHMaN2WByISQB6CicVNcINIBaOZrGje1AZEA4S2pVSHmrfYTPnXoCVga2ds4pjUNhCTQEiDYPIDWL0IS4gEIN69EhRAHoBHzShQIYQCNmVeKheAHwLmW31MeH1El0NroK8X02w2g0eibCpUCDqCX6JtCfHlLoPXRV/L5SFsKdyQbQCe1b8o1F5wJ2PyWMfrz9IB5evD0qpCwFLAlYBivAPACIR2G0jv7FX8+1pcKgoIjUawAhvH6b1pBWH7qaZAG43XjgGn23wDA9Pm7vtwLhn7jhL0ErBSYElYi/HMARQJKpAiAYApMIalQ18Gk3wnOLdl9E4ApUCLm84B5umdBKAaAnAJMRomUKI9iALLNV/q0kFcCi3GX6WG8yZ8DyKNPHG3Ob6r7JUDAggigAIDYlaCUJfH2GRrDchgFIGS0Aeznh6wJ2JgXZNon/jlAWMRDYgMg4YtNiuzn6J3eFAXA9w+cN0Wtvyx0nPv0GpVr98iZAN+bvaTA5wMHUGmjcnUhvtwJ6GQuCO0ci5oDWoUQ028/gF5KweMjnIBGSyF202Tcx2BjECg7RuPXAY1AoG6XpS2EhENI2SucNskJ2i0OkLdlPm0prDWydxpyzwucJ0Y4OnPcM0O6Dn1qzNQhzw1iOuzJUZcEnh0+vP4AOAg9VhIFQzEAAAAASUVORK5CYII=">
 <link rel="canonical" href="https://voidfighter.game/">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -212,46 +213,6 @@ body{background:#000;overflow:hidden;font-family:'Courier New',monospace;touch-a
   <div style="color:rgba(0,255,180,.2);font-size:8px;letter-spacing:2px;margin-top:18px">YOUR NAME SAVES YOUR SCORE, RANK AND PLAY TIME</div>
 </div>
 
-<!-- MULTIPLAYER SCREEN -->
-<div id="mp-screen">
-  <h2>MULTIPLAYER</h2>
-  <p>CHOOSE YOUR MODE THEN CREATE OR JOIN A ROOM</p>
-
-  <!-- MODE SELECTOR -->
-  <div style="display:flex;gap:12px;margin-bottom:20px;justify-content:center">
-    <button class="btn" id="mode-coop-btn" style="font-size:11px;padding:10px 24px;border-color:rgba(0,255,180,.4)">CO-OP</button>
-    <button class="btn" id="mode-versus-btn" style="font-size:11px;padding:10px 24px;border-color:rgba(255,100,50,.4);color:rgba(255,100,50,.7)">COMPETITION</button>
-  </div>
-  <div id="mode-desc" style="color:rgba(0,255,180,.35);font-size:9px;letter-spacing:1px;margin-bottom:18px;text-align:center;max-width:340px"></div>
-
-  <div class="mp-section">
-    <h3>ROOM</h3>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <button class="btn btn-gold" id="create-room-btn" style="font-size:9px;padding:7px 16px">CREATE ROOM</button>
-      <input class="room-input" id="join-key-input" placeholder="ROOM KEY" maxlength="8">
-      <button class="btn" id="join-room-btn" style="font-size:9px;padding:7px 16px">JOIN</button>
-    </div>
-    <div id="room-key-display" style="color:#ffdd00;font-size:11px;letter-spacing:4px;margin-top:10px;display:none"></div>
-    <div id="mp-players"></div>
-  </div>
-
-  <div id="room-status" style="display:none;text-align:center;margin-bottom:14px">
-    <div style="color:rgba(0,255,180,.5);font-size:9px;letter-spacing:2px;margin-bottom:8px" id="room-status-txt">WAITING FOR PLAYERS...</div>
-    <button class="btn btn-gold" id="start-game-btn" style="font-size:13px;padding:14px 44px;letter-spacing:4px;display:none">START GAME</button>
-  </div>
-
-  <div class="mp-section" id="mp-lb-section">
-    <h3>GLOBAL TOP 5</h3>
-    <div id="mp-lb-preview"></div>
-  </div>
-
-  <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
-    <button class="btn" id="mp-solo-btn">SOLO MODE</button>
-    <button class="btn" id="mp-close-btn">BACK</button>
-    <button class="btn btn-red" id="leave-room-btn" style="display:none">LEAVE ROOM</button>
-  </div>
-</div>
-
 <!-- START SCREEN -->
 <div class="sc" id="ss">
   <h1>VOID FIGHTER</h1>
@@ -263,7 +224,6 @@ body{background:#000;overflow:hidden;font-family:'Courier New',monospace;touch-a
   </div>
   <button id="sb2" style="background:linear-gradient(135deg,#7c3aed,#9333ea);border:none;color:#fff;font-size:18px;padding:16px 56px;border-radius:8px;cursor:pointer;font-family:inherit;letter-spacing:5px;font-weight:900;text-shadow:0 0 10px rgba(255,255,255,.5);box-shadow:0 0 26px rgba(124,58,237,.55),0 4px 16px rgba(0,0,0,.4);margin-bottom:12px;transition:all .2s" onmouseover="this.style.boxShadow='0 0 40px rgba(124,58,237,.8)'" onmouseout="this.style.boxShadow='0 0 26px rgba(124,58,237,.55)'">START</button>
   <button class="btn btn-gold" onclick="openStore()">HANGAR -- VAISSEAUX</button>
-  <button class="btn" id="mp-open-btn">MULTIPLAYER</button>
   <button class="btn" onclick="openLeaderboard()">LEADERBOARD</button>
   <div class="ad-container" id="ad-title" style="position:static;display:block;transform:none;border:none;background:none;padding:0;margin-top:16px">
     <div class="ad-label">PUBLICITE</div>
@@ -406,121 +366,6 @@ async function sbLeaderboard(){
   if(!PB)return local;
   try{var r=await PB.collection('leaderboard').getList(1,20,{sort:'-score'});return r.items.length?r.items.map(function(i){return{username:i.username,score:i.score,level:i.level};}):local;}
   catch(e){return local;}
-}
-
-function genKey(){return(Math.random().toString(36).slice(2,6)+Math.random().toString(36).slice(2,6)).toUpperCase();}
-
-async function createRoom(){
-  var key=genKey();
-  if(!PB){ROOM_KEY=key;IS_HOST=true;return key;}
-  try{
-    var host=CURRENT_USER?CURRENT_USER.username:'PILOT';
-    await PB.collection('private_rooms').create({room_key:key,host:host,mode:MP_MODE,players:JSON.stringify([{name:host,score:0,lvl:1}])});
-    ROOM_KEY=key;IS_HOST=true;startRoomPoll(key);return key;
-  }catch(e){ROOM_KEY=key;IS_HOST=true;return key;}
-}
-
-async function joinRoom(key){
-  key=key.toUpperCase().trim();
-  if(!PB){ROOM_KEY=key;IS_HOST=false;return{ok:true};}
-  try{
-    var r=await PB.collection('private_rooms').getFirstListItem('room_key="'+key+'"');
-    if(!r)return{err:'ROOM NOT FOUND'};
-    MP_MODE=r.mode||'coop';
-    var players=typeof r.players==='string'?JSON.parse(r.players):r.players||[];
-    var nm=CURRENT_USER?CURRENT_USER.username:'PILOT';
-    if(!players.find(function(p){return p.name===nm;})){players.push({name:nm,score:0,lvl:1});await PB.collection('private_rooms').update(r.id,{players:JSON.stringify(players)});}
-    ROOM_KEY=key;IS_HOST=false;startRoomPoll(key);return{ok:true,players:players};
-  }catch(e){return{err:'ROOM NOT FOUND'};}
-}
-
-async function updateRoom(){
-  if(!PB||!ROOM_KEY||!CURRENT_USER)return;
-  try{
-    var r=await PB.collection('private_rooms').getFirstListItem('room_key="'+ROOM_KEY+'"');
-    if(!r)return;
-    var players=typeof r.players==='string'?JSON.parse(r.players):r.players||[];
-    var me=players.find(function(p){return p.name===CURRENT_USER.username;});
-    if(me){me.score=G.score;me.lvl=G.lvl;}
-    await PB.collection('private_rooms').update(r.id,{players:JSON.stringify(players)});
-  }catch(e){}
-}
-
-function startRoomPoll(key){
-  if(ROOM_POLL)clearInterval(ROOM_POLL);
-  ROOM_POLL=setInterval(async function(){
-    if(!PB)return;
-    try{
-      var r=await PB.collection('private_rooms').getFirstListItem('room_key="'+key+'"');
-      if(!r)return;
-      var players=typeof r.players==='string'?JSON.parse(r.players):r.players||[];
-      if(!IS_HOST&&players.length===1&&players[0].name==='__START__'){
-        stopRoomPoll();
-        document.getElementById('mp-screen').style.display='none';
-        launchWithCountdown();return;
-      }
-      renderRoomPlayers(players);
-    }catch(e){}
-  },2500);
-}
-
-function stopRoomPoll(){if(ROOM_POLL){clearInterval(ROOM_POLL);ROOM_POLL=null;}}
-
-function launchWithCountdown(){
-  var ld=document.getElementById('loading-mp'),lp=document.getElementById('load-players');
-  if(ld){ld.style.display='flex';var ct=3;lp.textContent='LAUNCHING IN 3...';
-  var ci=setInterval(function(){ct--;
-    if(ct>0)lp.textContent='LAUNCHING IN '+ct+'...';
-    else{clearInterval(ci);ld.style.display='none';start();if(MP_MODE==='versus')enableVersusHUD();showMsgIn(MP_MODE==='versus'?'COMPETITION!':'CO-OP!',2000);}
-  },1000);}else{start();if(MP_MODE==='versus')enableVersusHUD();}
-}
-
-function startRealtime(roomKey){
-  if(!PB)return;stopRealtime();
-  try{
-    PB.collection('game_sessions').subscribe('*',function(e){
-      if(e.action==='delete')return;
-      var d=e.record;if(!d||d.room_key!==roomKey)return;
-      var u=d.username;if(u===(CURRENT_USER?CURRENT_USER.username:''))return;
-      if(!OTHER_PLAYERS[u]){
-        var ghost=new THREE.Group();
-        ghost.add(new THREE.Mesh(new THREE.ConeGeometry(.55,2.6,8),new THREE.MeshBasicMaterial({color:0xff6600,wireframe:true})));
-        var sp2=new THREE.Sprite(new THREE.SpriteMaterial({map:TX.gr,transparent:true,blending:THREE.AdditiveBlending}));
-        sp2.scale.set(1.5,1.5,1);ghost.add(sp2);S.add(ghost);
-        OTHER_PLAYERS[u]={mesh:ghost,score:0,hp:100,lvl:1};
-      }
-      var op=OTHER_PLAYERS[u];op.score=d.score||0;op.hp=d.hp||100;op.lvl=d.lvl||1;
-      if(MP_MODE==='coop'){op.mesh.visible=true;op.mesh.position.set(d.x,d.y,d.z);if(!IS_HOST&&d.hostZ!==undefined)PL.position.z=d.hostZ;}
-      else{op.mesh.visible=false;updateVersusHUD();}
-    });
-  }catch(e){console.warn('[VF] Realtime err',e);}
-}
-
-function stopRealtime(){
-  if(PB){try{PB.collection('game_sessions').unsubscribe('*');}catch(e){}}
-  Object.keys(OTHER_PLAYERS).forEach(function(u){if(OTHER_PLAYERS[u].mesh)S.remove(OTHER_PLAYERS[u].mesh);});
-  OTHER_PLAYERS={};
-}
-
-var RT_TICK=0;
-async function broadcastPos(){
-  if(!PB||!CURRENT_USER||!G.run||!ROOM_KEY)return;
-  RT_TICK++;if(RT_TICK%4!==0)return;
-  var payload={room_key:ROOM_KEY,username:CURRENT_USER.username,x:PL.position.x,y:PL.position.y,z:PL.position.z,score:G.score,hp:G.hp,lvl:G.lvl};
-  if(IS_HOST&&MP_MODE==='coop')payload.hostZ=PL.position.z;
-  try{
-    if(MY_SESSION_ID){await PB.collection('game_sessions').update(MY_SESSION_ID,payload);}
-    else{var rec=await PB.collection('game_sessions').create(payload);MY_SESSION_ID=rec.id;}
-  }catch(e){MY_SESSION_ID=null;}
-}
-
-function renderRoomPlayers(players){
-  var el=document.getElementById('mp-players');if(!el)return;el.innerHTML='';
-  players.filter(function(p){return p.name!=='__START__';}).forEach(function(p,i){
-    var d=document.createElement('div');d.className='mp-player'+(i===0?' host':'');
-    d.textContent=(i===0?'[HOST] ':'')+p.name+'  --  SCORE: '+(p.score||0)+'  LVL: '+(p.lvl||1);
-    el.appendChild(d);
-  });
 }
 
 function updateProfileHUD(){
@@ -1191,7 +1036,6 @@ function gameOver(quit){
   saveCredits();
   sbSave();
   sbScore(G.score,G.lvl);
-  if(ROOM_KEY)updateRoom();
   document.getElementById('gs').style.display='flex';
   document.getElementById('gst').innerHTML=
     (isNewBest?'<div style="color:#ffdd00;letter-spacing:3px;text-shadow:0 0 14px #ffdd00;font-size:13px;margin-bottom:6px">NEW BEST SCORE!</div>':'')+
@@ -1605,9 +1449,7 @@ requestAnimationFrame(animate);
   updHUD();
   // Slowly shift fog density based on level for atmosphere
   S.fog.density=Math.max(.0006,.0014-.00005*Math.min(G.lvl,15));
-  broadcastPos();
-  if(FT%60===0){updateProfileHUD();if(ROOM_KEY&&FT%300===0)updateRoom();}
-  if(MP_MODE==="versus"&&RT_CHANNEL&&FT%30===0)updateVersusHUD();
+  if(FT%60===0){updateProfileHUD();}
   // Shift fog color per boss tier for atmosphere
   if(G.bossOn&&G.boss){
     var tier3=G.boss.userData.tier||0;
@@ -1648,135 +1490,6 @@ document.getElementById('auth-name').addEventListener('keydown',function(e){
 });
 // Pre-fill last used name
 try{var ln=localStorage.getItem('vf_last_name');if(ln)document.getElementById('auth-name').value=ln;}catch(e){}
-
-//  MULTIPLAYER SCREEN LOGIC 
-// Mode buttons
-var modeDesc=document.getElementById('mode-desc');
-document.getElementById('mode-coop-btn').addEventListener('click',function(){
-  MP_MODE='coop';
-  document.getElementById('mode-coop-btn').style.borderColor='var(--cyan,#00ffb4)';document.getElementById('mode-coop-btn').style.color='#00ffb4';
-  document.getElementById('mode-versus-btn').style.borderColor='rgba(255,100,50,.4)';document.getElementById('mode-versus-btn').style.color='rgba(255,100,50,.7)';
-  modeDesc.textContent='CO-OP: Both pilots in the same 3D space. Kill enemies together. Shared wave progression.';
-});
-document.getElementById('mode-versus-btn').addEventListener('click',function(){
-  MP_MODE='versus';
-  document.getElementById('mode-versus-btn').style.borderColor='#ff6633';document.getElementById('mode-versus-btn').style.color='#ff6633';
-  document.getElementById('mode-coop-btn').style.borderColor='rgba(0,255,180,.25)';document.getElementById('mode-coop-btn').style.color='rgba(0,255,180,.4)';
-  modeDesc.textContent='COMPETITION: Separate games, live scores face-to-face. First to reach the highest score wins.';
-});
-// Default mode desc
-modeDesc.textContent='CO-OP: Both pilots in the same 3D space. Kill enemies together. Shared wave progression.';
-
-document.getElementById('mp-open-btn').addEventListener('click',async function(){
-  document.getElementById('mp-screen').style.display='flex';
-  var arr=await sbLeaderboard();
-  var el=document.getElementById('mp-lb-preview');el.innerHTML='';
-  arr.slice(0,5).forEach(function(e,i){
-    var d=document.createElement('div');
-    d.style.cssText='color:rgba(0,255,180,.7);font-size:9px;padding:2px 0;letter-spacing:1px;';
-    d.textContent=(i+1)+'. '+e.username+'  --  '+e.score.toLocaleString()+'  (LVL '+e.level+')';
-    el.appendChild(d);
-  });
-  if(ROOM_KEY){
-    document.getElementById('room-key-display').style.display='block';
-    document.getElementById('room-key-display').textContent='ROOM: '+ROOM_KEY+' ['+MP_MODE.toUpperCase()+']';
-    document.getElementById('room-status').style.display='block';
-    document.getElementById('leave-room-btn').style.display='inline-flex';
-    document.getElementById('start-game-btn').style.display=IS_HOST?'inline-flex':'none';
-    document.getElementById('start-game-btn').disabled=!IS_HOST;
-    document.getElementById('room-status-txt').textContent=IS_HOST?'YOU ARE HOST':'WAITING FOR HOST TO START...';
-    startRoomPoll(ROOM_KEY);
-  }
-});
-
-document.getElementById('mp-close-btn').addEventListener('click',function(){
-  document.getElementById('mp-screen').style.display='none';
-  stopRoomPoll();
-});
-
-document.getElementById('mp-solo-btn').addEventListener('click',function(){
-  document.getElementById('mp-screen').style.display='none';
-  stopRoomPoll();
-  document.getElementById('sb2').click();
-});
-
-document.getElementById('leave-room-btn').addEventListener('click',function(){
-  ROOM_KEY=null;IS_HOST=false;stopRoomPoll();stopRealtime();
-  document.getElementById('join-room-btn').disabled=false;document.getElementById('join-room-btn').style.opacity='1';
-  document.getElementById('create-room-btn').disabled=false;document.getElementById('create-room-btn').style.opacity='1';
-  document.getElementById('room-status').style.display='none';
-  document.getElementById('room-key-display').style.display='none';
-  document.getElementById('leave-room-btn').style.display='none';
-  document.getElementById('start-game-btn').style.display='none';
-  document.getElementById('mp-players').innerHTML='';
-  document.getElementById('join-key-input').value='';
-});
-
-document.getElementById('create-room-btn').addEventListener('click',async function(){
-  var key=await createRoom();
-  var d=document.getElementById('room-key-display');
-  d.style.display='block';
-  d.textContent='ROOM KEY: '+key+'  (share this with friends)';
-  document.getElementById('join-key-input').value=key;
-  IS_HOST=true;
-  startRealtime(key);
-  document.getElementById('join-room-btn').disabled=true;
-  document.getElementById('join-room-btn').style.opacity='.3';
-  document.getElementById('create-room-btn').disabled=true;
-  document.getElementById('create-room-btn').style.opacity='.3';
-  document.getElementById('room-status').style.display='block';
-  document.getElementById('room-status-txt').textContent='YOU ARE HOST -- SHARE THE KEY WITH YOUR FRIEND';
-  document.getElementById('leave-room-btn').style.display='inline-flex';
-  document.getElementById('start-game-btn').style.display='inline-flex';
-  document.getElementById('start-game-btn').disabled=false;
-});
-
-document.getElementById('join-room-btn').addEventListener('click',async function(){
-  var key=document.getElementById('join-key-input').value.trim();
-  if(!key){showMsgIn('ENTER A ROOM KEY',1500);return;}
-  var res=await joinRoom(key);
-  if(res.err){showMsgIn(res.err,2000);return;}
-  if(res.players)renderRoomPlayers(res.players);
-  document.getElementById('room-key-display').style.display='block';
-  document.getElementById('room-key-display').textContent='JOINED ROOM: '+key;
-  IS_HOST=false;
-  startRealtime(key);
-  document.getElementById('room-status').style.display='block';
-  document.getElementById('room-status-txt').textContent='JOINED! WAITING FOR HOST TO START...';
-  document.getElementById('leave-room-btn').style.display='inline-flex';
-  document.getElementById('start-game-btn').style.display='none';
-  document.getElementById('start-game-btn').disabled=true;
-});
-
-document.getElementById('start-game-btn').addEventListener('click',async function(){
-  if(!ROOM_KEY){showMsgIn('NO ROOM ACTIVE',1500);return;}
-  if(!IS_HOST){document.getElementById('start-game-btn').style.display='none';return;}
-  // Signal all players to start via Supabase room status
-  if(RT_CHANNEL){
-    RT_CHANNEL.send({type:'broadcast',event:'start',payload:{host:CURRENT_USER?CURRENT_USER.username:'HOST',mode:MP_MODE}});
-  }
-  // Also write to DB as fallback for polling
-  if(SB){try{await SB.from('private_rooms').update({players:JSON.stringify([{name:'__START__',score:0,lvl:1}])}).eq('room_key',ROOM_KEY);}catch(e){}}
-  document.getElementById('mp-screen').style.display='none';
-  stopRoomPoll();
-  // Show loading screen for 3s so all players can sync
-  var ld=document.getElementById('loading-mp');
-  var lp=document.getElementById('load-players');
-  ld.style.display='flex';
-  var ct=3;
-  lp.textContent='LAUNCHING IN '+ct+'...';
-  var ci=setInterval(function(){
-    ct--;
-    if(ct>0){lp.textContent='LAUNCHING IN '+ct+'...';}
-    else{
-      clearInterval(ci);
-      ld.style.display='none';
-      start();
-      if(MP_MODE==='versus'){enableVersusHUD();}
-      showMsgIn(MP_MODE==='versus'?'COMPETITION!':'CO-OP!',2000);
-    }
-  },1000);
-});
 
 //  One-time English UI setup 
 document.getElementById('sb2').textContent=T('start');
