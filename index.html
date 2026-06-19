@@ -151,10 +151,13 @@ body{background:#000;overflow:hidden;font-family:'Courier New',monospace;touch-a
 <canvas id="c"></canvas>
 <div id="profile-hud"></div>
 <div id="ad-left" style="position:fixed;top:50%;left:0;transform:translateY(-50%);width:160px;z-index:5;display:none">
-  <ins class="adsbygoogle" style="display:block;width:160px;height:600px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="AD_SLOT_LEFT_160x600" data-ad-format="fixed"></ins>
+  <ins style="width:160px;height:600px" data-width="160" data-height="600" class="q0a0ac794ff" data-domain="//data527.click" data-affquery="/4a43f87c3ff29555c19e/0a0ac794ff/?placementName=gauche_ecran_titre"></ins>
 </div>
 <div id="ad-right" style="position:fixed;top:50%;right:0;transform:translateY(-50%);width:160px;z-index:5;display:none">
-  <ins class="adsbygoogle" style="display:block;width:160px;height:600px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="AD_SLOT_RIGHT_160x600" data-ad-format="fixed"></ins>
+  <ins style="width:160px;height:600px" data-width="160" data-height="600" class="od07b5ced5e" data-domain="//data527.click" data-affquery="/4a43f87c3ff29555c19e/d07b5ced5e/?placementName=droite_ecran_titre"></ins>
+</div>
+<div id="ad-ingame-left" style="position:fixed;top:50%;left:0;transform:translateY(-50%);width:160px;z-index:5;display:none">
+  <ins style="width:160px;height:600px" data-width="160" data-height="600" class="cb516538459" data-domain="//data527.click" data-affquery="/4a43f87c3ff29555c19e/b516538459/?placementName=Gauche_in_game"></ins>
 </div>
 <div id="versus-hud"><div class="vs-card vs-me" id="vs-me"></div><div style="color:#ff3355;font-size:18px;font-weight:900;align-self:center;text-shadow:0 0 10px #ff3355">VS</div><div class="vs-card vs-them" id="vs-them"></div></div>
 
@@ -251,15 +254,15 @@ body{background:#000;overflow:hidden;font-family:'Courier New',monospace;touch-a
 
 <!-- START SCREEN -->
 <div class="sc" id="ss">
-  <h1>VOID <span style="color:#7c3aed;text-shadow:0 0 28px #7c3aed,0 0 60px #9333ea">FIGHTER</span></h1>
+  <h1>VOID FIGHTER</h1>
   <p id="ss-sub">DEEP SPACE COMBAT -- FREE 3D BROWSER GAME</p>
-  <div id="pseudo-bar" style="display:flex;gap:8px;align-items:center;margin-bottom:16px;background:rgba(124,58,237,.07);border:1px solid rgba(124,58,237,.25);border-radius:8px;padding:8px 16px;flex-wrap:wrap;justify-content:center">
-    <span style="color:rgba(124,58,237,.7);font-size:9px;letter-spacing:2px" id="pseudo-display">PILOT: --</span>
-    <input id="pseudo-input" type="text" maxlength="14" placeholder="CHANGE NAME" style="background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.3);color:#a78bfa;padding:5px 10px;border-radius:5px;font-family:inherit;font-size:11px;letter-spacing:2px;outline:none;width:140px;text-transform:uppercase">
-    <button class="btn" id="pseudo-change-btn" style="font-size:9px;padding:5px 14px;border-color:rgba(124,58,237,.4);color:#a78bfa">CHANGE</button>
+  <div id="pseudo-bar" style="display:flex;gap:8px;align-items:center;margin-bottom:16px;background:rgba(0,255,180,.05);border:1px solid rgba(0,255,180,.15);border-radius:8px;padding:8px 16px;flex-wrap:wrap;justify-content:center">
+    <span style="color:rgba(0,255,180,.5);font-size:9px;letter-spacing:2px" id="pseudo-display">PILOT: --</span>
+    <input id="pseudo-input" type="text" maxlength="14" placeholder="CHANGE NAME" style="background:rgba(0,255,180,.06);border:1px solid rgba(0,255,180,.2);color:#00ffb4;padding:5px 10px;border-radius:5px;font-family:inherit;font-size:11px;letter-spacing:2px;outline:none;width:140px;text-transform:uppercase">
+    <button class="btn" id="pseudo-change-btn" style="font-size:9px;padding:5px 14px">CHANGE</button>
   </div>
-  <button id="sb2" style="background:linear-gradient(135deg,#7c3aed,#9333ea);border:none;color:#fff;font-size:20px;padding:18px 64px;border-radius:8px;cursor:pointer;font-family:inherit;letter-spacing:6px;font-weight:900;text-shadow:0 0 12px rgba(255,255,255,.5);box-shadow:0 0 32px rgba(124,58,237,.6),0 4px 20px rgba(0,0,0,.4);margin-bottom:16px;transition:all .2s" onmouseover="this.style.boxShadow='0 0 48px rgba(124,58,237,.9)'" onmouseout="this.style.boxShadow='0 0 32px rgba(124,58,237,.6)'">START</button>
-  <button class="btn btn-gold" onclick="openStore()">HANGAR -- SHIPS</button>
+  <button id="sb2" style="background:linear-gradient(135deg,#7c3aed,#9333ea);border:none;color:#fff;font-size:18px;padding:16px 56px;border-radius:8px;cursor:pointer;font-family:inherit;letter-spacing:5px;font-weight:900;text-shadow:0 0 10px rgba(255,255,255,.5);box-shadow:0 0 26px rgba(124,58,237,.55),0 4px 16px rgba(0,0,0,.4);margin-bottom:12px;transition:all .2s" onmouseover="this.style.boxShadow='0 0 40px rgba(124,58,237,.8)'" onmouseout="this.style.boxShadow='0 0 26px rgba(124,58,237,.55)'">START</button>
+  <button class="btn btn-gold" onclick="openStore()">HANGAR -- VAISSEAUX</button>
   <button class="btn" id="mp-open-btn">MULTIPLAYER</button>
   <button class="btn" onclick="openLeaderboard()">LEADERBOARD</button>
   <div class="ad-container" id="ad-title" style="position:static;display:block;transform:none;border:none;background:none;padding:0;margin-top:16px">
@@ -275,10 +278,10 @@ body{background:#000;overflow:hidden;font-family:'Courier New',monospace;touch-a
   <p id="go-sub">COQUE BREACHEE</p>
   <div class="p" id="gst" style="margin-bottom:20px;padding:14px 28px;line-height:2.6;font-size:10px"></div>
   <button class="btn btn-gold" id="rb-ad" style="margin-bottom:14px;font-size:16px;padding:18px 56px;letter-spacing:4px;box-shadow:0 0 28px rgba(255,220,0,.45)">2ND LIFE -- WATCH AD</button>
-  <button class="btn btn-red" id="rb" style="font-size:14px;padding:15px 48px;letter-spacing:3px;margin-bottom:12px">RESTART</button>
   <button class="btn" id="home-btn">HOME</button>
   <button class="btn btn-gold" id="lb-btn">LEADERBOARD</button>
   <button class="btn" onclick="openStore()">HANGAR</button>
+  <button class="btn btn-red" id="rb" style="font-size:14px;padding:14px 44px;letter-spacing:3px;margin-top:16px">RESTART</button>
   <div id="ad-gameover" style="position:static;display:block;transform:none;border:none;background:none;padding:0;margin-top:16px">
     <div class="ad-label">PUBLICITE</div>
     <ins style="width:300px;height:250px;display:block" data-width="300" data-height="250" class="ac31768aaf9" data-domain="//data527.click" data-affquery="/0005fd3f46222ada8010/c31768aaf9/?placementName=Game_over_centre"></ins>
@@ -315,14 +318,14 @@ body{background:#000;overflow:hidden;font-family:'Courier New',monospace;touch-a
     <div style="display:flex;flex-direction:column;gap:10px">
       <button class="btn" id="resume-btn">REPRENDRE</button>
       <button class="btn btn-gold" onclick="openStore()">HANGAR</button>
-      <button class="btn btn-red" id="quit-btn">QUIT</button>
+      <button class="btn btn-red" id="quit-btn">QUITTER</button>
     </div>
   </div>
 </div>
 
 <!-- SHIP STORE -->
 <div id="store">
-  <h2>SHIP HANGAR</h2>
+  <h2>HANGAR SPATIAL</h2>
   <p id="store-sub">CREDITS DISPONIBLES: <span id="store-cr" style="color:#ffdd00;font-size:12px">0</span></p>
   <div id="ships-grid"></div>
   <button class="btn btn-gold" onclick="closeStore()">CLOSE HANGAR</button>
@@ -655,7 +658,6 @@ function mkPlayerMesh(shipDef){
 }
 
 var PL=mkPlayerMesh(SHIPS[activeShip]);
-PL.scale.setScalar(1.2);
 S.add(PL);
 
 // Mini ship preview - canvas 2D (no extra WebGL contexts)
@@ -916,16 +918,15 @@ function fireBul(x,y,z,vx,vy,vz,isP,aoe,dmg,col){
 function pShoot(){
   var w=WP[G.wpn],px=PL.position.x,py=PL.position.y,pz=PL.position.z-1.4;
   var d=w.dmg*dmgMult();
-  var bspd=w.spd*Math.pow(1.2,Math.floor((G.lvl+1)/5));// x1.2 before each boss (lvl 4,9,14...)
-  if(w.spr>0){[-w.spr,0,w.spr].forEach(function(ox){fireBul(px,py,pz,ox,0,-bspd,true,0,d,w.col);});}
-  else{fireBul(px,py,pz,0,0,-bspd,true,w.aoe,d,w.col);}
+  if(w.spr>0){[-w.spr,0,w.spr].forEach(function(ox){fireBul(px,py,pz,ox,0,-w.spd,true,0,d,w.col);});}
+  else{fireBul(px,py,pz,0,0,-w.spd,true,w.aoe,d,w.col);}
 }
 function eShoot(e){
   if(e.position.z>=PL.position.z)return;
   var dx=PL.position.x-e.position.x,dy=PL.position.y-e.position.y,dz=PL.position.z-e.position.z;
   var len=Math.sqrt(dx*dx+dy*dy+dz*dz)||1;
   var sc=Math.max(.008,.22-G.lvl*.02);
-  var spd=1.7+Math.min(G.lvl*.04,1.2);// vitesse balle augmente
+  var spd=1.85+Math.min(G.lvl*.04,1.2);// vitesse balle legerement augmentee
   fireBul(e.position.x,e.position.y,e.position.z,
     dx/len*spd+(Math.random()-.5)*sc,dy/len*spd+(Math.random()-.5)*sc,dz/len*spd,
     false,0,16+Math.floor(G.lvl/5)*2,0xff2222);
@@ -1108,6 +1109,7 @@ function start(){
   clearWorld();  var sh=SHIPS[activeShip];
   document.getElementById('ad-left').style.display='none';
   document.getElementById('ad-right').style.display='none';
+  document.getElementById('ad-ingame-left').style.display='block';
   G.hp=sh.hp;G.hpM=sh.hp;G.sh=sh.hp;G.shM=sh.hp*sh.shMult;
   G.score=0;G.lvl=1;G.kills=0;G.need=5;
   G.wpn=0;G.uwpn=2;G.bossOn=false;G.boss=null;G.bossHp=0;G.bossHpM=0;
@@ -1117,7 +1119,7 @@ function start(){
   G.run=true;
   document.getElementById('ss').style.display='none';document.getElementById('gs').style.display='none';
   document.getElementById('pause-overlay').style.display='none';
-  spawnE();spawnE();updHUD();
+  for(var si=0;si<5;si++)spawnE();updHUD();
 }
 // =========================================================
 // LEADERBOARD
@@ -1183,7 +1185,7 @@ function gameOver(quit){
   document.getElementById("versus-hud").style.display="none";
   document.getElementById('ad-left').style.display='block';
   document.getElementById('ad-right').style.display='block';
-  try{(adsbygoogle=window.adsbygoogle||[]).push({});(adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}
+  document.getElementById('ad-ingame-left').style.display='none';
   var isNewBest=G.score>G.best;
   if(isNewBest){G.best=G.score;try{localStorage.setItem('vf_best',G.best);}catch(e){}}
   saveCredits();
@@ -1224,9 +1226,21 @@ function revive(){
   PL.position.set(0,0,PL.position.z);vX=0;vY=0;
   G.run=true;
   document.getElementById('gs').style.display='none';
-  clearWorld();spawnE();spawnE();updHUD();
+  clearWorld();for(var si=0;si<5;si++)spawnE();updHUD();
 }
 document.getElementById('sb2').addEventListener('click',start);
+
+document.getElementById('pseudo-change-btn').addEventListener('click',async function(){
+  var name=document.getElementById('pseudo-input').value.trim();
+  if(!name)return;
+  var res=await authLogin(name);
+  if(res.err){showMsgIn(res.err,2000);return;}
+  document.getElementById('pseudo-display').textContent='PILOT: '+CURRENT_USER.username;
+  document.getElementById('pseudo-input').value='';
+  showMsgIn('NAME: '+CURRENT_USER.username,1500);
+  try{localStorage.setItem('vf_last_name',CURRENT_USER.username);}catch(e){}
+});
+document.getElementById('pseudo-input').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('pseudo-change-btn').click();});
 document.getElementById('rb').addEventListener('click',start);
 document.getElementById('home-btn').addEventListener('click',function(){
   G.run=false;
@@ -1262,10 +1276,11 @@ function animate(){
 });
 requestAnimationFrame(animate);
   var dt=CLK.getDelta();FT++;
+  var norm=Math.min(dt*60,2);
   if(!G.run||G.paused){R.render(S,CAM);return;}
 
   // --- PLAYER ---
-  var AC=.22,DR=.78,MS=(SHIPS[activeShip].spd||.22)*4.0;// Fixed - no level scaling
+  var AC=.16*norm,DR=Math.pow(.82,norm),MS=(SHIPS[activeShip].spd||.22)*3.2;
   var ax=0,ay=0;
   if(K['ArrowLeft'])ax-=AC;if(K['ArrowRight'])ax+=AC;
   if(K['ArrowUp'])ay+=AC;if(K['ArrowDown'])ay-=AC;
@@ -1303,15 +1318,14 @@ requestAnimationFrame(animate);
   if(G.combo>0){G.comboTimer++;if(G.comboTimer>180){G.combo=0;G.comboTimer=0;}}
 
   // --- SPAWN ---
-  // Difficulte infinie: plafond monte tous les 10 niveaux
-  // Lvl 1-5: difficile | Lvl 6+: courbe adoucie
-  var eCap=Math.min(5+G.lvl+Math.floor(G.lvl/8)*2,35);
-  var maxE=eCap, spRate=Math.max(14,110-G.lvl*6);
-  G.spT++;if(G.spT>=spRate&&ENES.length<maxE&&!G.bossOn){G.spT=0;spawnE();}
-  // Surge wave: every 600 frames spawn 3 enemies at once if not boss
-  // Vague d assaut: toutes les 8s, plus intense avec le niveau
-  var surgeSize=Math.min(2+Math.floor(G.lvl/4),8);
-  if(FT%480===0&&!G.bossOn&&G.run){for(var sw=0;sw<surgeSize;sw++)if(ENES.length<maxE)spawnE();}
+  // Palier fixe par groupe de 5 niveaux: lvl1-5=5max, lvl6-10=8max, lvl11-15=11max, infini
+  var tierIdx=Math.floor((G.lvl-1)/5);// 0 pour lvl1-5, 1 pour lvl6-10, 2 pour lvl11-15...
+  var maxE=5+tierIdx*3;
+  var spRate=Math.max(20,90-G.lvl*2);
+  // Stop repop au DERNIER niveau du palier (lvl5,10,15...) pour nettoyer avant le boss
+  var isLastLevelOfTier=(G.lvl%5===0);
+  if(!isLastLevelOfTier&&G.spT>=spRate&&ENES.length<maxE&&!G.bossOn){G.spT=0;spawnE();}
+  G.spT++;
   // Timed pickup drops every ~8 seconds
   if(FT%480===240&&Math.random()<.6){
     var px2=PL.position.x+(Math.random()-.5)*16;
@@ -1328,33 +1342,36 @@ requestAnimationFrame(animate);
     var strat=e.userData.strat||0;
     var L=G.lvl;
 
-    // === POSITIONNEMENT INTELLIGENT: s'eparpille, garde distance ===
-    // Chaque ennemi a une position orbitale unique basee sur son phaseOffset
-    var orbitX=Math.sin(FT*.025+ph)*10+Math.cos(FT*.018+ph*1.3)*5;
-    var orbitY=Math.cos(FT*.02+ph)*6+Math.sin(FT*.015+ph*0.9)*3;
-    // Distance de combat selon strategie (pas trop pres!)
-    var combatDist=strat===0?22:strat===1?38:strat===2?28:48;
-    combatDist+=Math.floor(L/5)*2;// s'eloigne avec les niveaux
-    var targetX=PL.position.x+orbitX;
-    var targetY=PL.position.y+orbitY;
-    var targetZ=PL.position.z-combatDist;
-    // Pull vers position (lent = fluide, pas de rush)
-    var pullStr=.012+L*.0004;
+    // === POSITIONNEMENT SELON STRATEGIE ===
+    var targetX,targetY,targetZ;
+    if(strat===0){// Agressif: fonce vers le joueur en zigzag
+      targetX=PL.position.x+Math.sin(FT*.05+ph)*3;
+      targetY=PL.position.y+Math.cos(FT*.04+ph)*2;
+      targetZ=PL.position.z-18-Math.floor(L/8)*2;
+    } else if(strat===1){// Prudent: reste a distance, recule si balle proche
+      targetX=PL.position.x+Math.sin(FT*.03+ph)*6;
+      targetY=PL.position.y+Math.cos(FT*.025+ph)*4;
+      targetZ=PL.position.z-38-Math.floor(L/10)*2;
+    } else if(strat===2){// Flanc: se positionne sur le cote du joueur
+      var side=(ph>.0)?1:-1;
+      targetX=PL.position.x+side*(8+Math.sin(FT*.02+ph)*3);
+      targetY=PL.position.y+Math.sin(FT*.04+ph)*3;
+      targetZ=PL.position.z-25;
+    } else {// Sniper: orbite loin, tire de loin avec haute precision
+      var orbitR=10+Math.sin(FT*.015+ph)*3;
+      targetX=PL.position.x+Math.cos(FT*.02+ph)*orbitR;
+      targetY=PL.position.y+Math.sin(FT*.015+ph)*orbitR*.6;
+      targetZ=PL.position.z-50-Math.floor(L/5)*2;
+    }
+    // Pull doux vers cible strategique
+    var pullStr=.016+L*.0008;
     e.position.x+=(targetX-e.position.x)*pullStr;
     e.position.y+=(targetY-e.position.y)*pullStr;
-    e.position.z+=(targetZ-e.position.z)*(pullStr*.7);
-    // Repulsion entre ennemis (s'eparpillent)
-    for(var ri=0;ri<ENES.length;ri++){
-      if(ri===i||!ENES[ri].userData.alive)continue;
-      var rx=e.position.x-ENES[ri].position.x,ry=e.position.y-ENES[ri].position.y;
-      var rd=Math.sqrt(rx*rx+ry*ry);
-      if(rd<4&&rd>0){e.position.x+=rx/rd*.06;e.position.y+=ry/rd*.04;}
-    }
-    // Jamais derriere le joueur
-    if(e.position.z>PL.position.z-8)e.position.z=PL.position.z-8;
-    // Clamp
-    if(e.position.x>16)e.position.x=16;if(e.position.x<-16)e.position.x=-16;
-    if(e.position.y>10)e.position.y=10;if(e.position.y<-10)e.position.y=-10;
+    e.position.z+=(targetZ-e.position.z)*(pullStr*.8);
+
+    // Clamp pour rester jouable
+    if(e.position.x>13)e.position.x=13;if(e.position.x<-13)e.position.x=-13;
+    if(e.position.y>9)e.position.y=9;if(e.position.y<-9)e.position.y=-9;
 
     // === ROTATIONS PAR TYPE ===
     e.rotation.y+=.03+sp2*.5;
@@ -1614,6 +1631,7 @@ document.getElementById('auth-btn').addEventListener('click',async function(){
   if(CURRENT_USER&&CURRENT_USER.credits)G.credits=CURRENT_USER.credits;
   if(CURRENT_USER&&CURRENT_USER.best_score)G.best=CURRENT_USER.best_score;
   document.getElementById('auth-screen').style.display='none';
+  if(document.getElementById('pseudo-display'))document.getElementById('pseudo-display').textContent='PILOT: '+CURRENT_USER.username;
   updateProfileHUD();
   var msg=res.returning?('WELCOME BACK, '+CURRENT_USER.username):('WELCOME, '+CURRENT_USER.username+'!');
   showMsgIn(msg,2500);
@@ -1756,7 +1774,7 @@ document.getElementById('start-game-btn').addEventListener('click',async functio
 });
 
 //  One-time English UI setup 
-// sb2 is set in HTML as START
+document.getElementById('sb2').textContent=T('start');
 document.getElementById('go-title').textContent=T('go');
 document.getElementById('go-sub').textContent=T('gosub');
 document.getElementById('rb').textContent='RESTART';
@@ -1776,7 +1794,6 @@ requestAnimationFrame(animate);
 
 // Init adsense slots
 window.addEventListener('load',function(){
-  try{(adsbygoogle=window.adsbygoogle||[]).push({});(adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}
 });
 
 })();
